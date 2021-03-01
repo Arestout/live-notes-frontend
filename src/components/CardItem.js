@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './CardItem.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons';
 
 function CardItem(props) {
   return (
@@ -15,25 +15,25 @@ function CardItem(props) {
               alt="User Image"
               src={props.src}
             />
-            <div>
-            </div>
+            <div></div>
           </figure>
           <div className="cards__item__info">
             <h5 className="cards__item__title">{props.title}</h5>
             <Link
-              className='social-icon-like'
-              to='/'
-              target='_blank'
-              aria-label='Like'
+              className="social-icon-like"
+              to="/"
+              target="_blank"
+              aria-label="Like"
             >
-            <FontAwesomeIcon icon={faHeart}/>
+              <FontAwesomeIcon icon={faHeart} />
             </Link>
             <Link
-              className='social-icon-like'
-              to='/'
-              target='_blank'
-              aria-label='Comment'
-            ><FontAwesomeIcon icon={faComment}/>
+              className="social-icon-like"
+              to="/"
+              target="_blank"
+              aria-label="Comment"
+            >
+              <FontAwesomeIcon icon={faComment} />
             </Link>
           </div>
         </Link>

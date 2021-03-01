@@ -26,51 +26,61 @@ function Navbar() {
 
   return (
     <>
-      <nav className='navbar'>
-        <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-          LiveNote
-            <i class='fab fa-typo3' />
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            LiveNote
+            <i className="fab fa-typo3" />
           </Link>
-          <div className='menu-icon' onClick={handleClick}>
+          <div className="menu-icon" onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+            <li className="nav-item">
+              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                 Главная
               </Link>
             </li>
-            <li className='nav-item'>
+            <li className="nav-item">
               <Link
-                to='/diaries'
-                className='nav-links'
+                to="/diaries"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
                 Дневники
               </Link>
             </li>
-            <li className='nav-item'>
+            <li className="nav-item">
               <Link
-                to='/'
-                className='nav-links'
+                to="/sign-in"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
                 Войти
               </Link>
             </li>
-
-            <li>
+            <li className="nav-item">
               <Link
-                to='/'
-                className='nav-links-mobile'
+                to="/sign-up"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
-               Создать дневник
+                Регистрация
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/"
+                className="nav-links-mobile"
+                onClick={closeMobileMenu}
+              >
+                Создать дневник
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>Создать дневник</Button>}
+          {button && (
+            <Button buttonStyle="btn--outline">Создать дневник</Button>
+          )}
         </div>
       </nav>
     </>
