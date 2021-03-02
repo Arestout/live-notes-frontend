@@ -9,6 +9,7 @@ import {
   faLinkedinIn,
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 function Footer() {
   return (
@@ -32,6 +33,7 @@ function Footer() {
           <div className="footer-logo">
             <Link to="/" className="social-logo">
               LiveNote
+              <LibraryBooksIcon></LibraryBooksIcon>
             </Link>
           </div>
           <small className="website-rights">LiveNotes © 2021</small>

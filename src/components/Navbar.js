@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -30,7 +31,7 @@ function Navbar() {
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             LiveNote
-            <i className="fab fa-typo3" />
+            <LibraryBooksIcon></LibraryBooksIcon>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
