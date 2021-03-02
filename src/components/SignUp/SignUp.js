@@ -18,6 +18,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Copyright from '../Copyright/Copyright';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,7 +44,7 @@ export default function SignUp() {
   const classes = useStyles();
 
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date('2014-08-18T21:11:54')
+    new Date(new Date().toJSON().slice(0, 10))
   );
 
   const handleDateChange = (date) => {
@@ -144,7 +145,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/sign-in" variant="body2">
+              <Link to="/sign-in" component={RouterLink} variant="body2">
                 Уже есть аккаунт? Войти
               </Link>
             </Grid>
