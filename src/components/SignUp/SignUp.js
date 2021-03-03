@@ -83,7 +83,7 @@ export default function SignUp() {
     } catch (error) {
       const response = error.response;
       if (
-        response?.data === 'такой пользователь уже существует' &&
+        response?.data === 'Такой пользователь уже существует' &&
         response?.status === 400
       ) {
         setFormStatus(formStatusProps.duplicate);
