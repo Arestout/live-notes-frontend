@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from '../Copyright/Copyright';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+const onSubmit = () => {
+  return;
+};
 
 export default function SignIn() {
   const classes = useStyles();
@@ -90,8 +95,8 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/sign-up" variant="body2">
-                Нет акаунта? Зарегистрируйтесь
+              <Link to="/sign-up" component={RouterLink} variant="body2">
+                Нет аккаунта? Зарегистрируйтесь
               </Link>
             </Grid>
           </Grid>

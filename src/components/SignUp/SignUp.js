@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +18,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Copyright from '../Copyright/Copyright';
+import { Link as RouterLink } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import axios from 'axios';
+import SignUpSchema from './SignUp.schema';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,15 +43,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const formStatusProps = {
+  success: {
+    message: 'Регистрация прошла успешно',
+    type: 'success',
+  },
+  duplicate: {
+    message: 'Email уже существует',
+    type: 'error',
+  },
+  error: {
+    message: 'Что-то пошло не так. Попробуйте еще раз',
+    type: 'error',
+  },
+};
+
 export default function SignUp() {
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date('2014-08-18T21:11:54')
-  );
+  const [displayFormStatus, setDisplayFormStatus] = useState(false);
+  const [formStatus, setFormStatus] = useState({
+    message: '',
+    type: '',
+  });
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const createNewUser = async (data, resetForm) => {
+    try {
+      if (data) {
+        console.log(data);
+        return;
+        const response = await axios.post(
+          'https://limitless-savannah-84914.herokuapp.com/registration',
+          data
+        );
+        console.log(response);
+        setFormStatus(formStatusProps.success);
+        resetForm({});
+      }
+    } catch (error) {
+      const response = error.response;
+      if (
+        response?.data === 'Такой пользователь уже существует' &&
+        response?.status === 400
+      ) {
+        setFormStatus(formStatusProps.duplicate);
+      } else {
+        setFormStatus(formStatusProps.error);
+      }
+    } finally {
+      setDisplayFormStatus(true);
+    }
   };
 
   return (
@@ -60,96 +105,214 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Регистрация
         </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="name"
-                name="name"
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="Имя"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="login"
-                label="Логин"
-                name="login"
-                autoComplete="login"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  required
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="date-picker-inline"
-                  label="Дата рождения"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-              </MuiPickersUtilsProvider>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Я согласен с политикой конфидициальности"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Зарегистрироваться
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/sign-in" variant="body2">
-                Уже есть аккаунт? Войти
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+        <Formik
+          initialValues={{
+            name: '',
+            password: '',
+            confirmPassword: '',
+            login: '',
+            email: '',
+            date: new Date(new Date()).toJSON().slice(0, 10),
+          }}
+          onSubmit={(values, actions) => {
+            createNewUser(values, actions.resetForm);
+            setTimeout(() => {
+              actions.setSubmitting(false);
+            }, 500);
+          }}
+          validationSchema={SignUpSchema}
+        >
+          {(props) => {
+            const {
+              values,
+              touched,
+              errors,
+              handleBlur,
+              handleChange,
+              setFieldValue,
+              isSubmitting,
+            } = props;
+            return (
+              <Form className={classes.form}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="name"
+                      value={values.name}
+                      name="name"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Имя"
+                      autoFocus
+                      helperText={
+                        errors.name && touched.name
+                          ? 'Введите ваше имя.'
+                          : 'Введите ваше имя.'
+                      }
+                      error={errors.name && touched.name ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="login"
+                      value={values.login}
+                      name="login"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="login"
+                      label="Логин"
+                      helperText={
+                        errors.login && touched.login
+                          ? 'Введите ваш логин.'
+                          : 'Введите ваш логин.'
+                      }
+                      error={errors.login && touched.login ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="email"
+                      value={values.email}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email"
+                      name="email"
+                      helperText={
+                        errors.email && touched.email
+                          ? 'Введите ваш валидный Email.'
+                          : 'Введите ваш Email'
+                      }
+                      error={errors.email && touched.email ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="current-password"
+                      value={values.password}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Пароль"
+                      type="password"
+                      id="password"
+                      helperText={
+                        errors.password && touched.password
+                          ? 'Пароль не соответствует требованиям. Одна заглавная и одна маленькая буквы, один символ. 5 знаков'
+                          : 'Одна заглавная и одна маленькая буквы, один символ. 5 знаков.'
+                      }
+                      error={errors.password && touched.password ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      value={values.confirmPassword}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      label="Подтвердить пароль"
+                      type="password"
+                      helperText={
+                        errors.confirmPassword && touched.confirmPassword
+                          ? errors.confirmPassword
+                          : 'Введите ваш пароль еще раз'
+                      }
+                      error={
+                        errors.confirmPassword && touched.confirmPassword
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        required
+                        format="dd/MM/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Дата рождения"
+                        value={values.date}
+                        onChange={(value) => {
+                          console.log({ value });
+                          setFieldValue(
+                            'date',
+                            new Date(value).toJSON().slice(0, 10)
+                          );
+                        }}
+                        autoOk
+                        KeyboardButtonProps={{
+                          'aria-label': 'изменить дату рождения',
+                        }}
+                      />
+                    </MuiPickersUtilsProvider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          value="allowExtraEmails"
+                          color="primary"
+                          required
+                        />
+                      }
+                      label="Я согласен/согласна с политикой конфиденциальности *"
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={isSubmitting}
+                >
+                  Зарегистрироваться
+                </Button>
+                {displayFormStatus && (
+                  <div className="formStatus">
+                    {formStatus.type === 'error' ? (
+                      <p className={classes.errorMessage}>
+                        {formStatus.message}
+                      </p>
+                    ) : formStatus.type === 'success' ? (
+                      <p className={classes.successMessage}>
+                        {formStatus.message}
+                      </p>
+                    ) : null}
+                  </div>
+                )}
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link to="/sign-in" component={RouterLink} variant="body2">
+                      Уже есть аккаунт? Войти
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Form>
+            );
+          }}
+        </Formik>
       </div>
       <Box mt={5}>
         <Copyright />
