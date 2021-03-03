@@ -45,15 +45,15 @@ const useStyles = makeStyles((theme) => ({
 
 const formStatusProps = {
   success: {
-    message: 'Signed up successfully.',
+    message: 'Регистрация прошла успешно',
     type: 'success',
   },
   duplicate: {
-    message: 'Email-id already exist. Please use different email-id.',
+    message: 'Email уже существует',
     type: 'error',
   },
   error: {
-    message: 'Something went wrong. Please try again.',
+    message: 'Что-то пошло не так. Попробуйте еще раз',
     type: 'error',
   },
 };
