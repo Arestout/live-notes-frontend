@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const onSubmit = () => {
+  return;
+};
+
 export default function SignIn() {
   const classes = useStyles();
 
@@ -92,7 +96,7 @@ export default function SignIn() {
             </Grid>
             <Grid item>
               <Link to="/sign-up" component={RouterLink} variant="body2">
-                Нет акаунта? Зарегистрируйтесь
+                Нет аккаунта? Зарегистрируйтесь
               </Link>
             </Grid>
           </Grid>
