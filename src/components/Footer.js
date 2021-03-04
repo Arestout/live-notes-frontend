@@ -39,7 +39,7 @@ function Footer() {
           <small className="website-rights">LiveNotes © 2021</small>
           <div className="social-icons">
             <Link
-              class="social-icon-link facebook"
+              className="social-icon-link facebook"
               to="/"
               target="_blank"
               aria-label="Facebook"
@@ -47,7 +47,7 @@ function Footer() {
               <FontAwesomeIcon icon={faFacebookF} />
             </Link>
             <Link
-              class="social-icon-link instagram"
+              className="social-icon-link instagram"
               to="/"
               target="_blank"
               aria-label="Instagram"
@@ -55,7 +55,7 @@ function Footer() {
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
             <Link
-              class="social-icon-link youtube"
+              className="social-icon-link youtube"
               to="/"
               target="_blank"
               aria-label="Youtube"
@@ -63,7 +63,7 @@ function Footer() {
               <FontAwesomeIcon icon={faYoutube} />
             </Link>
             <Link
-              class="social-icon-link twitter"
+              className="social-icon-link twitter"
               to="/"
               target="_blank"
               aria-label="Twitter"
@@ -71,7 +71,7 @@ function Footer() {
               <FontAwesomeIcon icon={faTwitter} />
             </Link>
             <Link
-              class="social-icon-link twitter"
+              className="social-icon-link twitter"
               to="/"
               target="_blank"
               aria-label="LinkedIn"
