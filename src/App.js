@@ -7,6 +7,7 @@ import Diaries from './pages/Diaries';
 import SignIn from './pages/AuthSignIn';
 import SignUp from './pages/AuthSignUp';
 import CreateDiary from './pages/CreateDiary';
+import Footer from './components/Footer';
 
 function App() {
   return (

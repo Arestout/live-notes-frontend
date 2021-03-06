@@ -1,91 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import { ThemeProvider } from '@material-ui/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#262D33',
+    },
+    secondary: {
+      main: '#848688',
+    },
+  },
+});
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
+export default function Navbar() {
+  const classes = useStyles();
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+    <ThemeProvider theme={theme}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h4" className={classes.title}>
             LiveNote
-            <LibraryBooksIcon></LibraryBooksIcon>
-          </Link>
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Главная
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/diaries"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Дневники
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/sign-in"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Войти
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/sign-up"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Регистрация
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Создать дневник
-              </Link>
-            </li>
-          </ul>
-          {button && (
-            <Button buttonStyle="btn--outline">Создать дневник</Button>
-          )}
-        </div>
-      </nav>
-    </>
+            <LibraryBooksIcon />
+          </Typography>
+          <Button color="inherit" component={Link} to="/">
+            Главная
+          </Button>
+          <Button color="inherit" component={Link} to="/diaries">
+            Дневники
+          </Button>
+          <Button color="inherit" component={Link} to="/sign-in">
+            Войти
+          </Button>
+          <Button color="inherit" component={Link} to="/sign-up">
+            Регистрация
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
   );
 }
-
-export default Navbar;

@@ -6,6 +6,7 @@ import {
   Tooltip,
   Button,
   Avatar,
+  Typography,
 } from '@material-ui/core';
 
 function DiaryEntries(props) {
@@ -17,10 +18,25 @@ function DiaryEntries(props) {
             <ExpansionPanel key={entry.id} style={{ margin: '5px 0' }}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Avatar>LN</Avatar>
-                <h2 style={{ margin: '0 25px' }}>{entry.title}</h2>
+                <Typography>
+                  <h2
+                    style={{
+                      margin: '0 25px',
+                    }}
+                  >
+                    {entry.title}
+                  </h2>
+                </Typography>
               </ExpansionPanelSummary>
-              <p style={{ textAlign: 'left', margin: '10px 50px' }}>
-                {entry.description}
+              <p
+                style={{
+                  textAlign: 'left',
+                  margin: '10px 50px',
+                  overflow: 'auto',
+                  height: '100px',
+                }}
+              >
+                <Typography>{entry.description}</Typography>
               </p>
               <p
                 style={{ textAlign: 'right', margin: '10px', fontSize: '14px' }}

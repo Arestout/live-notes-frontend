@@ -1,88 +1,94 @@
 import React from 'react';
-import './Footer.css';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFacebookF,
-  faInstagram,
-  faYoutube,
-  faLinkedinIn,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import Copyright from './Copyright/Copyright';
 
-function Footer() {
+import {
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import { Typography, Container, IconButton, Grid } from '@material-ui/core';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#262D33',
+    },
+    secondary: {
+      main: '#848688',
+    },
+  },
+});
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  iconButton: {
+    marginLeft: theme.spacing(2),
+  },
+});
+
+export default function Footer() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState('recents');
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <div className="footer-container">
-      <div className="footer-links">
-        <div className="footer-link-items">
-          <Link to="/">О проекте</Link>
-        </div>
-        <div className="footer-link-items">
-          <Link to="/">Пользовательское соглашение</Link>
-        </div>
-        <div className="footer-link-items">
-          <Link to="/">Помощь</Link>
-        </div>
-        <div className="footer-link-items">
-          <Link to="/">Контакты</Link>
-        </div>
-      </div>
-      <section className="social-media">
-        <div className="social-media-wrap">
-          <div className="footer-logo">
-            <Link to="/" className="social-logo">
-              LiveNote
-              <LibraryBooksIcon></LibraryBooksIcon>
-            </Link>
-          </div>
-          <small className="website-rights">LiveNotes © 2021</small>
-          <div className="social-icons">
-            <Link
-              class="social-icon-link facebook"
-              to="/"
-              target="_blank"
-              aria-label="Facebook"
+    <ThemeProvider theme={theme}>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h4">
+            LiveNote
+            <LibraryBooksIcon />
+          </Typography>
+          <Container maxWidth="xs">
+            <Typography variant="body1" color="inherit">
+              <Copyright />
+            </Typography>
+          </Container>
+          <Typography variant="body1" color="inherit">
+            <IconButton
+              aria-label="facebook"
+              color="inherit"
+              className={classes.iconButton}
             >
-              <FontAwesomeIcon icon={faFacebookF} />
-            </Link>
-            <Link
-              class="social-icon-link instagram"
-              to="/"
-              target="_blank"
-              aria-label="Instagram"
+              <FacebookIcon fontSize="default" />
+            </IconButton>
+            <IconButton
+              aria-label="twitter"
+              color="inherit"
+              className={classes.iconButton}
             >
-              <FontAwesomeIcon icon={faInstagram} />
-            </Link>
-            <Link
-              class="social-icon-link youtube"
-              to="/"
-              target="_blank"
-              aria-label="Youtube"
+              <TwitterIcon fontSize="default" />
+            </IconButton>
+            <IconButton
+              aria-label="instagram"
+              color="inherit"
+              className={classes.iconButton}
             >
-              <FontAwesomeIcon icon={faYoutube} />
-            </Link>
-            <Link
-              class="social-icon-link twitter"
-              to="/"
-              target="_blank"
-              aria-label="Twitter"
+              <InstagramIcon fontSize="default" />
+            </IconButton>
+            <IconButton
+              aria-label="instagram"
+              color="inherit"
+              className={classes.iconButton}
             >
-              <FontAwesomeIcon icon={faTwitter} />
-            </Link>
-            <Link
-              class="social-icon-link twitter"
-              to="/"
-              target="_blank"
-              aria-label="LinkedIn"
-            >
-              <FontAwesomeIcon icon={faLinkedinIn} />
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+              <LinkedInIcon fontSize="default" />
+            </IconButton>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
   );
 }
-
-export default Footer;
