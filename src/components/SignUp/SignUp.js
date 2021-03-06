@@ -71,9 +71,8 @@ export default function SignUp() {
     try {
       if (data) {
         console.log(data);
-        return;
         const response = await axios.post(
-          'https://limitless-savannah-84914.herokuapp.com/registration',
+          'https://limitless-savannah-84914.herokuapp.com/api/auth/registration',
           data
         );
         console.log(response);
@@ -82,10 +81,7 @@ export default function SignUp() {
       }
     } catch (error) {
       const response = error.response;
-      if (
-        response?.data === 'Такой пользователь уже существует' &&
-        response?.status === 400
-      ) {
+      if (response?.status === 400) {
         setFormStatus(formStatusProps.duplicate);
       } else {
         setFormStatus(formStatusProps.error);
@@ -112,7 +108,7 @@ export default function SignUp() {
             confirmPassword: '',
             login: '',
             email: '',
-            date: new Date(new Date()).toJSON().slice(0, 10),
+            birthday: new Date(new Date()).toJSON().slice(0, 10),
           }}
           onSubmit={(values, actions) => {
             createNewUser(values, actions.resetForm);
@@ -251,7 +247,7 @@ export default function SignUp() {
                         margin="normal"
                         id="date-picker-inline"
                         label="Дата рождения"
-                        value={values.date}
+                        value={values.birthday}
                         onChange={(value) => {
                           console.log({ value });
                           setFieldValue(
