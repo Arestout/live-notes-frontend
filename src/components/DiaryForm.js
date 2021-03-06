@@ -1,6 +1,8 @@
 import React from 'react';
 import DiaryEntries from './DiaryEntries';
-import { Container, TextField, Button, Tooltip } from '@material-ui/core';
+import { Container, TextField, IconButton, Tooltip } from '@material-ui/core';
+import UploadPhotoButton from './UploadPhotoButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 class DiaryForm extends React.Component {
   constructor(props) {
@@ -116,12 +118,10 @@ class DiaryForm extends React.Component {
             onChange={this.onChangeHandler}
           />
           <Tooltip title="Добавить новую запись в дневник">
-            <Button
-              style={{
-                color: '#fff',
-                width: '80px',
-                background: '#999',
-              }}
+            <IconButton
+              color="primary"
+              frontSize="large"
+              aria-label="Создать запись"
               variant="contained"
               onClick={this.formSubmitHandler}
               disabled={
@@ -129,9 +129,10 @@ class DiaryForm extends React.Component {
                 !this.state.descriptionValue.length
               }
             >
-              Создать
-            </Button>
+              <AddCircleIcon />
+            </IconButton>
           </Tooltip>
+          <UploadPhotoButton />
         </form>
         <DiaryEntries
           entries={this.state.diaryEntries}
