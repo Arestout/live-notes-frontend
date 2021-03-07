@@ -1,71 +1,73 @@
 import React from 'react';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditPostButton from './Buttons/EditPostButton';
+import ReadMoreButton from './Buttons/ReadMoreButton';
+
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
   Tooltip,
-  Button,
-  Avatar,
   Typography,
+  IconButton,
+  Avatar,
+  CardContent,
+  CardMedia,
+  CardActions,
+  CardHeader,
+  Card,
 } from '@material-ui/core';
 
-function DiaryEntries(props) {
+const useStyles = makeStyles((theme) => ({
+  card: {
+    maxWidth: 345,
+    flexGrow: 1,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+}));
+
+export default function DiaryEntries(props) {
+  const classes = useStyles();
   return (
-    <div style={{ margin: '20px 0' }}>
+    <div>
       <ul>
         {props.entries.map((entry) => {
           return (
-            <ExpansionPanel key={entry.id} style={{ margin: '5px 0' }}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Avatar>LN</Avatar>
-                <Typography>
-                  <h2
-                    style={{
-                      margin: '0 25px',
-                    }}
-                  >
-                    {entry.title}
-                  </h2>
+            <Card
+              className={classes.card}
+              variant="outlined"
+              key={entry.id}
+              style={{ margin: '5px 0' }}
+            >
+              <CardHeader
+                avatar={<Avatar />}
+                title={entry.title}
+                subheader={entry.date}
+              />
+              <CardMedia style={{ height: '150px' }} image={entry.image} />
+              <CardContent>
+                <Typography variant="body2" component="p">
+                  {entry.description}
                 </Typography>
-              </ExpansionPanelSummary>
-              <p
-                style={{
-                  textAlign: 'left',
-                  margin: '10px 50px',
-                  overflow: 'auto',
-                  height: '100px',
-                }}
-              >
-                <Typography>{entry.description}</Typography>
-              </p>
-              <p
-                style={{ textAlign: 'right', margin: '10px', fontSize: '14px' }}
-              >
-                {'Создано:'}
-                {entry.date}
-              </p>
-              <Tooltip title="Удалить эту запись">
-                <Button
-                  style={{
-                    backgroundColor: '#f71450',
-                    color: '#fff',
-                    width: '80px',
-                    fontWeight: 'bold',
-                    margin: '20px',
-                  }}
-                  variant="contained"
-                  // color="secondary"
-                  onClick={() => props.deleteDiaryEntry(entry.id)}
-                >
-                  Удалить
-                </Button>
-              </Tooltip>
-            </ExpansionPanel>
+              </CardContent>
+              <CardActions disableSpacing>
+                <Tooltip title="Удалить эту запись">
+                  <IconButton
+                    aria-label="delete"
+                    color="secondary"
+                    onClick={() => props.deleteDiaryEntry(entry.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <EditPostButton />
+                <ReadMoreButton />
+              </CardActions>
+            </Card>
           );
         })}
       </ul>
     </div>
   );
 }
-
-export default DiaryEntries;

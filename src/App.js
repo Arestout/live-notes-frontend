@@ -7,7 +7,7 @@ import Diaries from './pages/Diaries';
 import SignIn from './pages/AuthSignIn';
 import SignUp from './pages/AuthSignUp';
 import CreateDiary from './pages/CreateDiary';
-import Footer from './components/Footer';
+import DiaryList from './pages/DiaryList';
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Route path="/sign-in" component={SignIn} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/create" exact component={CreateDiary} />
+          <Route path="/diary-list" exact component={DiaryList} />
         </Switch>
       </Router>
     </>

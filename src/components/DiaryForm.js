@@ -1,7 +1,13 @@
 import React from 'react';
 import DiaryEntries from './DiaryEntries';
-import { Container, TextField, IconButton, Tooltip } from '@material-ui/core';
-import UploadPhotoButton from './UploadPhotoButton';
+import {
+  Container,
+  TextField,
+  IconButton,
+  Tooltip,
+  Grid,
+} from '@material-ui/core';
+import UploadPhotoButton from './Buttons/UploadPhotoButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 class DiaryForm extends React.Component {
@@ -117,22 +123,30 @@ class DiaryForm extends React.Component {
             value={this.state.descriptionValue}
             onChange={this.onChangeHandler}
           />
-          <Tooltip title="Добавить новую запись в дневник">
-            <IconButton
-              color="primary"
-              frontSize="large"
-              aria-label="Создать запись"
-              variant="contained"
-              onClick={this.formSubmitHandler}
-              disabled={
-                !this.state.titleValue.length ||
-                !this.state.descriptionValue.length
-              }
-            >
-              <AddCircleIcon />
-            </IconButton>
-          </Tooltip>
-          <UploadPhotoButton />
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+          >
+            <Tooltip title="Добавить новую запись в дневник">
+              <span>
+                <IconButton
+                  color="primary"
+                  aria-label="Создать запись"
+                  variant="contained"
+                  onClick={this.formSubmitHandler}
+                  disabled={
+                    !this.state.titleValue.length ||
+                    !this.state.descriptionValue.length
+                  }
+                >
+                  <AddCircleIcon fontSize="default" />
+                </IconButton>
+              </span>
+            </Tooltip>
+            <UploadPhotoButton />
+          </Grid>
         </form>
         <DiaryEntries
           entries={this.state.diaryEntries}
