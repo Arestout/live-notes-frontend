@@ -21,7 +21,7 @@ export default function CreateDiary() {
             alignItems: 'center',
           }}
         ></Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" align="center">
           Создать запись
         </Typography>
         <DiaryForm />

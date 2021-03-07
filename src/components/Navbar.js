@@ -16,9 +16,6 @@ const theme = createMuiTheme({
     primary: {
       main: '#262D33',
     },
-    secondary: {
-      main: '#848688',
-    },
   },
 });
 
@@ -41,7 +38,7 @@ export default function Navbar() {
     <ThemeProvider theme={theme}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             LiveNote
             <LibraryBooksIcon />
           </Typography>

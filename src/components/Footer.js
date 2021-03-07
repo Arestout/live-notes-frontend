@@ -48,7 +48,7 @@ export default function Footer() {
     <ThemeProvider theme={theme}>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h4">
+          <Typography variant="h5">
             LiveNote
             <LibraryBooksIcon />
           </Typography>

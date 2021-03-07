@@ -7,8 +7,7 @@ video {
 }
 
 .hero-container {
-  /* background: url('/images/img-home.jpg') center center/cover no-repeat; */
-  height: 100vh;
+  height: 600px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -18,32 +17,14 @@ video {
   object-fit: contain;
 }
 
-.hero-container > h1 {
-    color: #fff;
 
-    font-size: 30px;
-}
-.hero-container > h2 {
-  margin-top: 14px;
-  color: #fff;
-  font-size: 20px;
-}
-
-.hero-container > p {
-  margin-top: 14px;
-  color: #fff;
-  font-size: 20px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-  'Lucida Sans', Arial, sans-serif;
-  text-align: center;
-}
 
 .fa-play-circle {
   margin-left: 4px;
 }
 
 @media screen and (max-width: 960px) {
-  .hero-container > h1 {
+  .hero-container > h5 {
     font-size: 70px;
     margin-top: -150px;
   }
@@ -55,7 +36,4 @@ video {
     margin-top: -100px;
   }
 
-  .hero-container > p {
-    font-size: 30px;
-  }
 }
