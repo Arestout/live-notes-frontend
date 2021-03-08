@@ -1,0 +1,3 @@
+export const FETCH_SUCCESS_AUTH = 'FETCH_SUCCESS_AUTH';
+export const LOGOUT = 'LOGOUT';
+export const FETCH_ERROR_AUTH = 'FETCH_ERROR_AUTH';

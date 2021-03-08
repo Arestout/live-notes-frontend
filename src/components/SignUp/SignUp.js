@@ -18,7 +18,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Copyright from '../Copyright/Copyright';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import axios from 'axios';
 import SignUpSchema from './SignUp.schema';
@@ -60,6 +60,7 @@ const formStatusProps = {
 
 export default function SignUp() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState({
@@ -75,13 +76,17 @@ export default function SignUp() {
           'https://limitless-savannah-84914.herokuapp.com/api/auth/registration',
           data
         );
-        console.log(response);
-        setFormStatus(formStatusProps.success);
+
+        if (response.data?.message === 'Successfully registration!') {
+          return history.push('/sign-in');
+        }
+
+        setFormStatus(formStatusProps.error);
         resetForm({});
       }
     } catch (error) {
       const response = error.response;
-      if (response?.status === 400) {
+      if (response?.message === 'The email has already been taken.') {
         setFormStatus(formStatusProps.duplicate);
       } else {
         setFormStatus(formStatusProps.error);

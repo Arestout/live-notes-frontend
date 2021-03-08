@@ -15,8 +15,8 @@ import Container from '@material-ui/core/Container';
 import Copyright from '../Copyright/Copyright';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import axios from 'axios';
 import SignInSchema from './SignIn.schema';
+import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,6 +52,7 @@ const formStatusProps = {
 export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
+  const { dispatchFetchAuthOnLogin } = useAuth();
 
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState({
@@ -62,18 +63,11 @@ export default function SignIn() {
   const loginUser = async (data, resetForm) => {
     try {
       if (data) {
-        console.log(data);
-        const response = await axios.post(
-          'https://limitless-savannah-84914.herokuapp.com/api/auth/login',
-          data
-        );
-        console.log(response);
+        dispatchFetchAuthOnLogin(data);
         history.push('/');
       }
     } catch (error) {
       setFormStatus(formStatusProps.error);
-    } finally {
-      setDisplayFormStatus(true);
     }
   };
 
