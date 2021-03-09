@@ -245,8 +245,6 @@ export default function SignUp() {
                   <Grid item xs={12}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
                         required
                         format="dd/MM/yyyy"
                         margin="normal"
@@ -257,7 +255,7 @@ export default function SignUp() {
                           console.log({ value });
                           setFieldValue(
                             'date',
-                            new Date(value).toJSON().slice(0, 10)
+                            new Date(value).toJSON()?.slice(0, 10)
                           );
                         }}
                         autoOk
