@@ -63,22 +63,26 @@ export default function Navbar({ user }) {
             Дневники
           </Button>
           {user ? (
-            <Button color="inherit" onClick={onLogOut}>
-              Выйти
-            </Button>
+            <>
+              <Button color="inherit" component={Link} to="/create">
+                Создать запись
+              </Button>
+              <Button color="inherit" component={Link} to="/">
+                Мои записи
+              </Button>
+              <Button color="inherit" onClick={onLogOut}>
+                Выйти
+              </Button>
+            </>
           ) : (
-            <Button color="inherit" component={Link} to="/sign-in">
-              Войти
-            </Button>
-          )}
-          {user ? (
-            <Button color="inherit" component={Link} to="/">
-              Мои записи
-            </Button>
-          ) : (
-            <Button color="inherit" component={Link} to="/sign-up">
-              Регистрация
-            </Button>
+            <>
+              <Button color="inherit" component={Link} to="/sign-in">
+                Войти
+              </Button>
+              <Button color="inherit" component={Link} to="/sign-up">
+                Регистрация
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>

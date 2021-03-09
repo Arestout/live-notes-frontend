@@ -53,9 +53,7 @@ export default function Footer() {
             <LibraryBooksIcon />
           </Typography>
           <Container maxWidth="xs">
-            <Typography variant="body1" color="inherit">
-              <Copyright />
-            </Typography>
+            <Copyright />
           </Container>
           <Typography variant="body1" color="inherit">
             <IconButton

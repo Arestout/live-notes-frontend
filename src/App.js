@@ -21,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function App(props) {
   const { auth } = useAuth();
-
   // useEffect(() => {
   //   if (auth.access_token) {
   //     dispatchFetchAuth(auth.access_token);
