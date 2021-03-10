@@ -5,13 +5,13 @@ const SignUpSchema = Yup.object().shape({
   name: Yup.string().required('Please enter full name'),
   login: Yup.string().required('Please enter login'),
   password: Yup.string()
-    .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*_+-=]).{6,20}\S$/)
+    .matches(/^(?=.*([a-z]|[A-Z]))(?=.*[!@#$%^&*_+-=]).{6,255}/)
     .required(
       'Please valid password. One uppercase, one lowercase, one special character and no spaces'
     ),
   confirmPassword: Yup.string()
     .required('Required')
-    .test('password-match', 'Password musth match', function (value) {
+    .test('password-match', 'Пароли должны совпадать', function (value) {
       return this.parent.password === value;
     }),
 });

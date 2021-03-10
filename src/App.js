@@ -38,31 +38,37 @@ function App(props) {
     }
   }, [auth.access_token, dispatchFetchAuth]);
 
-  if (auth.isLoading) {
-    return (
-      <div className={classes.loader}>
-        <Loader />
-      </div>
-    );
-  }
+  // if (auth.isLoading) {
+  //   return (
+  //     <div className={classes.loader}>
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
       <Router>
-        <div className={classes.root}>
-          {auth.user && <ClippedDrawer user={auth.user} />}
-          <div className={classes.content}>
-            <Navbar user={auth.user} />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/diaries" component={Diaries} />
-              <Route path="/sign-in" component={SignIn} />
-              <Route path="/sign-up" component={SignUp} />
-              <Route path="/create" exact component={CreateDiary} />
-              <Route path="/diary-list" exact component={DiaryList} />
-            </Switch>
+        {auth.isAuth || !auth.access_token ? (
+          <div className={classes.root}>
+            {auth.user && <ClippedDrawer user={auth.user} />}
+            <div className={classes.content}>
+              <Navbar user={auth.user} />
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/diaries" component={Diaries} />
+                <Route path="/sign-in" component={SignIn} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/create" exact component={CreateDiary} />
+                <Route path="/diary-list" exact component={DiaryList} />
+              </Switch>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={classes.loader}>
+            <Loader />
+          </div>
+        )}
       </Router>
     </>
   );

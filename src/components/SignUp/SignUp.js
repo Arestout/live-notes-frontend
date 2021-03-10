@@ -68,7 +68,7 @@ export default function SignUp() {
     type: '',
   });
 
-  const createNewUser = async (data, resetForm) => {
+  const createNewUser = async (data, setSubmitting) => {
     try {
       if (data) {
         console.log(data);
@@ -79,10 +79,10 @@ export default function SignUp() {
 
         if (response.data?.message === 'Successfully registration!') {
           return history.push('/sign-in');
+        } else {
+          setFormStatus(formStatusProps.error);
+          setSubmitting(false);
         }
-
-        setFormStatus(formStatusProps.error);
-        resetForm({});
       }
     } catch (error) {
       const response = error.response;
@@ -93,6 +93,7 @@ export default function SignUp() {
       }
     } finally {
       setDisplayFormStatus(true);
+      setSubmitting(false);
     }
   };
 
@@ -116,10 +117,10 @@ export default function SignUp() {
             birthday: new Date(new Date()).toJSON().slice(0, 10),
           }}
           onSubmit={(values, actions) => {
-            createNewUser(values, actions.resetForm);
-            setTimeout(() => {
-              actions.setSubmitting(false);
-            }, 500);
+            createNewUser(values, actions.setSubmitting);
+            // setTimeout(() => {
+            //   actions.setSubmitting(false);
+            // }, 500);
           }}
           validationSchema={SignUpSchema}
         >
@@ -210,8 +211,8 @@ export default function SignUp() {
                       id="password"
                       helperText={
                         errors.password && touched.password
-                          ? 'Пароль не соответствует требованиям. Одна заглавная и одна маленькая буквы, один символ. 5 знаков'
-                          : 'Одна заглавная и одна маленькая буквы, один символ. Мин. 6 знаков.'
+                          ? 'Минимум 6 знаков и один символ.'
+                          : 'Минимум 6 знаков и один символ.'
                       }
                       error={errors.password && touched.password ? true : false}
                       onChange={handleChange}
@@ -254,7 +255,7 @@ export default function SignUp() {
                         onChange={(value) => {
                           console.log({ value });
                           setFieldValue(
-                            'date',
+                            'birthday',
                             new Date(value).toJSON()?.slice(0, 10)
                           );
                         }}
