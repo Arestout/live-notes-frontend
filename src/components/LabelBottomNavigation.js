@@ -3,7 +3,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FolderIcon from '@material-ui/icons/Folder';
 import InfoIcon from '@material-ui/icons/Info';
 import HelpIcon from '@material-ui/icons/Help';
 import LocationOnIcon from '@material-ui/icons/LocationOn';

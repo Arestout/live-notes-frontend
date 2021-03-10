@@ -1,6 +1,7 @@
 import React from 'react';
 import EditPostButton from './Buttons/EditPostButton';
 import ReadMoreButton from './Buttons/ReadMoreButton';
+import ImageAvatar from '../components/Avatar/Avatar';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +9,6 @@ import {
   Tooltip,
   Typography,
   IconButton,
-  Avatar,
   CardContent,
   CardMedia,
   CardActions,
@@ -41,11 +41,14 @@ export default function DiaryEntries(props) {
               style={{ margin: '5px 0' }}
             >
               <CardHeader
-                avatar={<Avatar />}
+                avatar={<ImageAvatar />}
                 title={entry.title}
                 subheader={entry.date}
               />
-              <CardMedia style={{ height: '150px' }} image={entry.image} />
+              <CardMedia
+                style={{ height: '150px' }}
+                image={entry.image || ''}
+              />
               <CardContent>
                 <Typography variant="body2" component="p">
                   {entry.description}

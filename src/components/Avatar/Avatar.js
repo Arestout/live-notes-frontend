@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageAvatar() {
+export default function ImageAvatar(props) {
+  const { className } = props;
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classNames(classes.root, className)}>
       <Avatar
         alt="user name"
         src="/images/image-8.jpg"

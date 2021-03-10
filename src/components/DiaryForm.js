@@ -1,4 +1,7 @@
 import React from 'react';
+import axios from 'axios';
+
+import UploadPhotoButton from './Buttons/UploadPhotoButton';
 import DiaryEntries from './DiaryEntries';
 import {
   Container,
@@ -7,7 +10,7 @@ import {
   Tooltip,
   Grid,
 } from '@material-ui/core';
-import UploadPhotoButton from './Buttons/UploadPhotoButton';
+
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 class DiaryForm extends React.Component {
@@ -82,6 +85,8 @@ class DiaryForm extends React.Component {
       id: id,
     };
 
+    this.createNewRecord(newEntry.title, newEntry.description, 0);
+
     diaryEntries.unshift(newEntry);
 
     this.setState({
@@ -90,6 +95,22 @@ class DiaryForm extends React.Component {
       diaryEntries,
     });
   }
+
+  createNewRecord = async (title, text, publicFlag) => {
+    return await axios.post(
+      'https://limitless-savannah-84914.herokuapp.com/api/blog',
+      {
+        title,
+        text,
+        public: publicFlag,
+      },
+      {
+        headers: {
+          Authorization: 'bearer' + this.props.auth.access_token,
+        },
+      }
+    );
+  };
 
   deleteDiaryEntry(id) {
     const diaryEntries = [...this.state.diaryEntries];
