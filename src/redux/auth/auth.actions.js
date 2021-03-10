@@ -34,7 +34,7 @@ export const fetchAuth = (access_token) => async (dispatch) => {
     console.log(error);
     dispatch({
       type: types.FETCH_ERROR_AUTH,
-      payload: error,
+      payload: error.message,
     });
   }
 };
@@ -44,11 +44,12 @@ export const fetchAuthOnLogin = (data) => async (dispatch) => {
     const result = await Api.post('/auth/login', data);
     const { access_token } = result.data;
     window.localStorage.setItem('access_token', access_token);
-    dispatch(updateToken(access_token));
+    return dispatch(updateToken(access_token));
   } catch (error) {
+    console.log(error.message);
     dispatch({
       type: types.FETCH_ERROR_AUTH,
-      payload: error,
+      payload: error.message,
     });
   }
 };

@@ -35,8 +35,8 @@ export const useAuth = () => {
   );
 
   const dispatchFetchAuthOnLogin = useCallback(
-    ({ email, password }) => {
-      dispatch(authActions.fetchAuthOnLogin({ email, password }));
+    async ({ email, password }) => {
+      await dispatch(authActions.fetchAuthOnLogin({ email, password }));
     },
     [dispatch]
   );

@@ -7,6 +7,7 @@ const initialState = {
   access_token: token || null,
   isLoading: false,
   isAuth: false,
+  error: '',
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -33,6 +34,11 @@ export const authReducer = (state = initialState, action) => {
         user: null,
         access_token: null,
         isAuth: false,
+      };
+    case types.FETCH_ERROR_AUTH:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

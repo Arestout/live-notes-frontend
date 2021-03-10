@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +17,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignIn.schema';
 import { useAuth } from '../../hooks/useAuth';
+import Api from '../../api/api';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,12 +37,17 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  errorMessage: { color: 'red' },
 }));
 
 const formStatusProps = {
   success: {
     message: 'Регистрация прошла успешно',
     type: 'success',
+  },
+  unauthorized: {
+    message: 'Неправильные Email или пароль',
+    type: 'error',
   },
   error: {
     message: 'Что-то пошло не так. Попробуйте еще раз',
@@ -52,7 +58,7 @@ const formStatusProps = {
 export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
-  const { dispatchFetchRequestAuth, dispatchFetchAuthOnLogin } = useAuth();
+  const { dispatchUpdateToken } = useAuth();
 
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState({
@@ -60,15 +66,25 @@ export default function SignIn() {
     type: '',
   });
 
-  const loginUser = async (data, resetForm) => {
+  const loginUser = async (data, setSubmitting) => {
     try {
       if (data) {
-        dispatchFetchRequestAuth();
-        history.push('/');
-        dispatchFetchAuthOnLogin(data);
+        const result = await Api.post('/auth/login', data);
+        const { access_token } = result.data;
+        dispatchUpdateToken(access_token);
+        window.localStorage.setItem('access_token', access_token);
+        if (access_token) {
+          return history.push('/');
+        }
       }
     } catch (error) {
-      setFormStatus(formStatusProps.error);
+      if (error.response.status === 401) {
+        setFormStatus(formStatusProps.unauthorized);
+      } else {
+        setFormStatus(formStatusProps.error);
+      }
+      setDisplayFormStatus(true);
+      setSubmitting(false);
     }
   };
 
@@ -88,7 +104,7 @@ export default function SignIn() {
             password: '',
           }}
           onSubmit={(values, actions) => {
-            loginUser(values, actions.resetForm);
+            loginUser(values, actions.setSubmitting);
           }}
           validationSchema={SignInSchema}
         >
