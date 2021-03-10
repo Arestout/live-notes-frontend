@@ -10,7 +10,7 @@ export default function ReadMoreButton() {
     <div>
       <label htmlFor="icon-button-file">
         <Tooltip title="Читать далее">
-          <IconButton aria-label="read more" component={Link} to="/diary-list">
+          <IconButton aria-label="read more" component={Link} to="/">
             <MoreHorizIcon />
           </IconButton>
         </Tooltip>

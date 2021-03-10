@@ -11,9 +11,13 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import { Typography, Container, IconButton, Grid } from '@material-ui/core';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
+import {
+  Typography,
+  Container,
+  IconButton,
+  Toolbar,
+  AppBar,
+} from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {

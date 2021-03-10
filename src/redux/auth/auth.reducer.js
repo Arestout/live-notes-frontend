@@ -4,7 +4,7 @@ const rawUser = window.localStorage.getItem('user');
 
 const initialState = {
   user: rawUser ? JSON.parse(rawUser) : null,
-  access_token: window.localStorage.getItem('access_token'),
+  access_token: JSON.parse(window.localStorage.getItem('access_token') || ''),
   isAuth: false,
 };
 

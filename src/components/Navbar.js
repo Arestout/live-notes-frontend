@@ -67,7 +67,7 @@ export default function Navbar({ user }) {
               <Button color="inherit" component={Link} to="/create">
                 Создать запись
               </Button>
-              <Button color="inherit" component={Link} to="/">
+              <Button color="inherit" component={Link} to="diary-list">
                 Мои записи
               </Button>
               <Button color="inherit" onClick={onLogOut}>

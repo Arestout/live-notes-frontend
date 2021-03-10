@@ -1,30 +1,39 @@
 import React from 'react';
-import '../App.css';
-import DiaryForm from '../components/DiaryForm';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+import { useAuth } from '../hooks/useAuth';
+
+import { Typography, Container, Box } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Copyright from '../components/Copyright/Copyright';
+import ImageAvatar from '../components/Avatar/Avatar';
+import DiaryForm from '../components/DiaryForm';
+
+const useStyles = makeStyles((theme) => ({
+  avatarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+}));
 
 export default function CreateDiary() {
+  const { auth } = useAuth();
+  const { user } = auth;
+  const classes = useStyles();
   return (
     <>
       <Container className="App">
         <CssBaseline />
-        <Avatar
-          style={{
-            marginTop: '64px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            alignItems: 'center',
-          }}
-        ></Avatar>
+        <div className={classes.avatarContainer}>
+          <ImageAvatar />
+          <p>{user.name}</p>
+        </div>
         <Typography component="h1" variant="h5" align="center">
           Создать запись
         </Typography>
-        <DiaryForm />
+        <DiaryForm auth={auth} />
         <Box mt={5}></Box>
       </Container>
       <Box mt={5}></Box>
