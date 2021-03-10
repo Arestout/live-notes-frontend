@@ -28,7 +28,7 @@ export default function MyDiaryList() {
       }
     }
     req();
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <div style={{ padding: 12 }}>

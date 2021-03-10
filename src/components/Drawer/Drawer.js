@@ -52,7 +52,7 @@ export default function ClippedDrawer({ user }) {
         <div className={classes.drawerContainer}>
           <div className={classes.avatar}>
             <ImageAvatar />
-            <p>{user.name}</p>
+            <p>{user.login}</p>
           </div>
 
           <List>
