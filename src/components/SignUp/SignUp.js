@@ -211,7 +211,7 @@ export default function SignUp() {
                       helperText={
                         errors.password && touched.password
                           ? 'Пароль не соответствует требованиям. Одна заглавная и одна маленькая буквы, один символ. 5 знаков'
-                          : 'Одна заглавная и одна маленькая буквы, один символ. 5 знаков.'
+                          : 'Одна заглавная и одна маленькая буквы, один символ. Мин. 6 знаков.'
                       }
                       error={errors.password && touched.password ? true : false}
                       onChange={handleChange}
