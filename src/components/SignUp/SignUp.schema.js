@@ -5,7 +5,7 @@ const SignUpSchema = Yup.object().shape({
   name: Yup.string().required('Please enter full name'),
   login: Yup.string().required('Please enter login'),
   password: Yup.string()
-    .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{5,20}\S$/)
+    .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*_+-=]).{6,20}\S$/)
     .required(
       'Please valid password. One uppercase, one lowercase, one special character and no spaces'
     ),

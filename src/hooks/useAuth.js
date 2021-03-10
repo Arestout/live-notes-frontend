@@ -8,9 +8,18 @@ export const useAuth = () => {
 
   const dispatch = useDispatch();
 
-  const dispatchUpdateAuth = useCallback(
-    ({ user, access_token }) =>
-      dispatch(authActions.updateAuth({ user, access_token })),
+  const dispatchFetchRequestAuth = useCallback(
+    () => dispatch(authActions.fetchRequestAuth()),
+    [dispatch]
+  );
+
+  const dispatchUpdateUser = useCallback(
+    (user) => dispatch(authActions.updateUser(user)),
+    [dispatch]
+  );
+
+  const dispatchUpdateToken = useCallback(
+    (access_token) => dispatch(authActions.updateToken(access_token)),
     [dispatch]
   );
 
@@ -18,13 +27,12 @@ export const useAuth = () => {
     dispatch,
   ]);
 
-  //   const dispatchFetchAuth = useCallback(
-  //     (session_id) => {
-  //       dispatch(authActions.fetchRequestAuth());
-  //       dispatch(authActions.fetchAuth(session_id));
-  //     },
-  //     [dispatch]
-  //   );
+  const dispatchFetchAuth = useCallback(
+    (access_token) => {
+      dispatch(authActions.fetchAuth(access_token));
+    },
+    [dispatch]
+  );
 
   const dispatchFetchAuthOnLogin = useCallback(
     ({ email, password }) => {
@@ -35,8 +43,11 @@ export const useAuth = () => {
 
   return {
     auth,
-    dispatchUpdateAuth,
+    dispatchFetchRequestAuth,
+    dispatchUpdateUser,
+    dispatchUpdateToken,
     dispatchLogOut,
     dispatchFetchAuthOnLogin,
+    dispatchFetchAuth,
   };
 };
