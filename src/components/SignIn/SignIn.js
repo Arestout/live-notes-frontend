@@ -52,7 +52,7 @@ const formStatusProps = {
 export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
-  const { dispatchFetchAuthOnLogin } = useAuth();
+  const { dispatchFetchRequestAuth, dispatchFetchAuthOnLogin } = useAuth();
 
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState({
@@ -63,8 +63,9 @@ export default function SignIn() {
   const loginUser = async (data, resetForm) => {
     try {
       if (data) {
-        dispatchFetchAuthOnLogin(data);
+        dispatchFetchRequestAuth();
         history.push('/');
+        dispatchFetchAuthOnLogin(data);
       }
     } catch (error) {
       setFormStatus(formStatusProps.error);
@@ -88,9 +89,6 @@ export default function SignIn() {
           }}
           onSubmit={(values, actions) => {
             loginUser(values, actions.resetForm);
-            setTimeout(() => {
-              actions.setSubmitting(false);
-            }, 500);
           }}
           validationSchema={SignInSchema}
         >

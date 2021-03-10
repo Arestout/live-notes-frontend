@@ -1,20 +1,31 @@
 import * as types from './auth.types';
 
-const rawUser = window.localStorage.getItem('user');
+const token = window.localStorage.getItem('access_token');
 
 const initialState = {
-  user: rawUser ? JSON.parse(rawUser) : null,
-  access_token: window.localStorage.getItem('access_token'),
+  user: null,
+  access_token: token || null,
+  isLoading: false,
   isAuth: false,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.FETCH_REQUEST_AUTH:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case types.FETCH_SUCCESS_TOKEN:
+      return {
+        ...state,
+        access_token: action.payload,
+      };
     case types.FETCH_SUCCESS_AUTH:
       return {
         ...state,
-        user: action.payload.user,
-        access_token: action.payload.access_token,
+        user: action.payload,
+        isLoading: false,
         isAuth: true,
       };
     case types.LOGOUT:

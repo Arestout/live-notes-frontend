@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import './App.css';
 import Home from './pages/Home';
@@ -11,6 +11,7 @@ import DiaryList from './pages/DiaryList';
 import ClippedDrawer from './components/Drawer/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from './hooks/useAuth';
+import Loader from './components/Loader/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,17 +20,32 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
   },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  },
 }));
 
 function App(props) {
-  const { auth } = useAuth();
-  // useEffect(() => {
-  //   if (auth.access_token) {
-  //     dispatchFetchAuth(auth.access_token);
-  //   }
-  // }, [auth.access_token]);
-
+  const { auth, dispatchFetchAuth } = useAuth();
   const classes = useStyles();
+
+  useEffect(() => {
+    if (auth.access_token) {
+      dispatchFetchAuth(auth.access_token);
+    }
+  }, [auth.access_token, dispatchFetchAuth]);
+
+  if (auth.isLoading) {
+    return (
+      <div className={classes.loader}>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <>
       <Router>
