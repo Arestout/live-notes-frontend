@@ -49,7 +49,7 @@ function App(props) {
   return (
     <>
       <Router>
-        {auth.isAuth || !auth.access_token ? (
+        {auth.isAuth || auth.access_token ? (
           <div className={classes.root}>
             {auth.user && <ClippedDrawer user={auth.user} />}
             <div className={classes.content}>

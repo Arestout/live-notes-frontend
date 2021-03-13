@@ -28,7 +28,7 @@ export default function CreateDiary() {
         <CssBaseline />
         <div className={classes.avatarContainer}>
           <ImageAvatar />
-          <p>{user.name}</p>
+          <p>{user.login}</p>
         </div>
         <Typography component="h1" variant="h5" align="center">
           Создать запись
