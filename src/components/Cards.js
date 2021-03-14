@@ -12,9 +12,22 @@ import {
 import ReadMoreButton from './Buttons/ReadMoreButton';
 import LikeButton from './Buttons/LikeButton';
 import CommentButton from './Buttons/CommentButton';
+import DeletePostButton from './Buttons/DeletePostButton';
+import { useAuth } from '../hooks/useAuth';
+import { useEntries } from '../hooks/useEntries';
 
 const Cards = (props) => {
-  const { avatarUrl, title, date, description, image } = props;
+  const { avatarUrl, title, date, description, image, id } = props;
+  const {
+    auth: { access_token },
+  } = useAuth();
+  const { dispatchDeleteEntry } = useEntries();
+
+  const data = {
+    access_token,
+    id,
+  };
+
   return (
     <Card>
       <CardHeader
@@ -32,6 +45,7 @@ const Cards = (props) => {
         <LikeButton />
         <CommentButton />
         <ReadMoreButton />
+        <DeletePostButton data={data} onDelete={dispatchDeleteEntry} />
       </CardActions>
     </Card>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+import Api from '../api/api';
 import UploadPhotoButton from './Buttons/UploadPhotoButton';
 import DiaryEntries from './DiaryEntries';
 import {
@@ -97,8 +98,8 @@ class DiaryForm extends React.Component {
   }
 
   createNewRecord = async (title, text, publicFlag) => {
-    return await axios.post(
-      'https://limitless-savannah-84914.herokuapp.com/api/blog',
+    return await Api.post(
+      '/blog',
       {
         title,
         text,
@@ -112,13 +113,22 @@ class DiaryForm extends React.Component {
     );
   };
 
-  deleteDiaryEntry(id) {
+  deleteDiaryEntry = async (id) => {
     const diaryEntries = [...this.state.diaryEntries];
     const updatedDiaryEntries = diaryEntries.filter((entry) => entry.id !== id);
     this.setState({
       diaryEntries: updatedDiaryEntries,
     });
-  }
+    await Api.delete(
+      `/blog/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: 'bearer' + this.props.auth.access_token,
+        },
+      }
+    );
+  };
 
   render() {
     return (
