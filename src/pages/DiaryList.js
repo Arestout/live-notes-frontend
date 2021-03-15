@@ -43,6 +43,7 @@ export default function MyDiaryList() {
                     description={item.text}
                     image={''}
                     avatarUrl="/images/image-8.jpg"
+                    id={item.id}
                   />
                 </Grid>
               );

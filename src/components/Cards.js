@@ -9,12 +9,14 @@ import {
   Avatar,
   CardMedia,
 } from '@material-ui/core';
-import ReadMoreButton from './Buttons/ReadMoreButton';
+
 import LikeButton from './Buttons/LikeButton';
 import CommentButton from './Buttons/CommentButton';
+import ReadMoreButton from './Buttons/ReadMoreButton';
 
-const Cards = (props) => {
-  const { avatarUrl, title, date, description, image } = props;
+const Cards = (props, item) => {
+  console.log(props);
+  const { avatarUrl, title, date, description, image, id } = props;
   return (
     <Card>
       <CardHeader
@@ -31,7 +33,7 @@ const Cards = (props) => {
       <CardActions>
         <LikeButton />
         <CommentButton />
-        <ReadMoreButton />
+        <ReadMoreButton to={`/diary/${id}`} />
       </CardActions>
     </Card>
   );

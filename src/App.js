@@ -8,6 +8,7 @@ import SignIn from './pages/AuthSignIn';
 import SignUp from './pages/AuthSignUp';
 import CreateDiary from './pages/CreateDiary';
 import DiaryList from './pages/DiaryList';
+import FullRecord from './pages/FullRecord';
 import ClippedDrawer from './components/Drawer/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from './hooks/useAuth';
@@ -56,6 +57,7 @@ function App(props) {
               <Navbar user={auth.user} />
               <Switch>
                 <Route path="/" exact component={Home} />
+                <Route path="/diary/:id" exact component={FullRecord} />
                 <Route path="/diaries" component={Diaries} />
                 <Route path="/sign-in" component={SignIn} />
                 <Route path="/sign-up" component={SignUp} />

@@ -65,7 +65,7 @@ export default function DiaryEntries(props) {
                   </IconButton>
                 </Tooltip>
                 <EditPostButton />
-                <ReadMoreButton />
+                <ReadMoreButton to={`/diary/${entry.id}`} />
               </CardActions>
             </Card>
           );
