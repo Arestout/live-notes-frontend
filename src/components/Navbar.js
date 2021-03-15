@@ -52,10 +52,12 @@ export default function Navbar({ user }) {
       <CssBaseline />
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h5" className={classes.title}>
-            LiveNote
-            <LibraryBooksIcon />
-          </Typography>
+          <Button color="inherit" component={Link} to="/">
+            <Typography variant="h5" className={classes.title}>
+              LiveNote
+              <LibraryBooksIcon />
+            </Typography>
+          </Button>
           <Button color="inherit" component={Link} to="/">
             Главная
           </Button>

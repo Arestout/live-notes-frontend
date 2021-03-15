@@ -211,8 +211,8 @@ export default function SignUp() {
                       id="password"
                       helperText={
                         errors.password && touched.password
-                          ? 'Минимум 6 знаков и один символ.'
-                          : 'Минимум 6 знаков и один символ.'
+                          ? 'Минимум 6 знаков и обязательно один символ.'
+                          : 'Минимум 6 знаков и обязательно один символ.'
                       }
                       error={errors.password && touched.password ? true : false}
                       onChange={handleChange}
