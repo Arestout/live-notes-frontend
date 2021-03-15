@@ -19,7 +19,17 @@ import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
 
 const Cards = (props) => {
-  const { avatarUrl, title, date, description, image, id } = props;
+  const {
+    avatarUrl,
+    title,
+    date,
+    description,
+    image,
+    id,
+    likeHidden = false,
+    commentHidden = false,
+    titleClassName,
+  } = props;
   const {
     auth: { access_token },
   } = useAuth();
@@ -33,6 +43,7 @@ const Cards = (props) => {
   return (
     <Card>
       <CardHeader
+        classes={{ content: titleClassName }}
         avatar={<Avatar src={avatarUrl} />}
         title={title}
         subheader={date}
@@ -44,8 +55,8 @@ const Cards = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <LikeButton />
-        <CommentButton />
+        {!likeHidden && <LikeButton />}
+        {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
         <DeletePostButton data={data} onDelete={dispatchDeleteEntry} />
       </CardActions>
