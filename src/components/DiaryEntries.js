@@ -3,18 +3,16 @@ import EditPostButton from './Buttons/EditPostButton';
 import ReadMoreButton from './Buttons/ReadMoreButton';
 import ImageAvatar from '../components/Avatar/Avatar';
 
-import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Tooltip,
   Typography,
-  IconButton,
   CardContent,
   CardMedia,
   CardActions,
   CardHeader,
   Card,
 } from '@material-ui/core';
+import DeletePostButton from './Buttons/DeletePostButton';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -54,20 +52,16 @@ export default function DiaryEntries(props) {
               />
               <CardContent>
                 <Typography variant="body2" component="p">
-                  {entry.description}
+                  {entry.text}
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
-                <Tooltip title="Удалить эту запись">
-                  <IconButton
-                    aria-label="delete"
-                    color="secondary"
-                    onClick={() => props.deleteDiaryEntry(entry.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-                <EditPostButton />
+                <ReadMoreButton to={`/diary/${entry.id}`} />
+                <DeletePostButton
+                  id={entry.id}
+                  onDelete={props.deleteDiaryEntry}
+                />
+                <EditPostButton to={`/edit/${entry.id}`} />
               </CardActions>
             </Card>
           );

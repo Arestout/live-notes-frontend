@@ -25,13 +25,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialState = {
-  titleValue: '',
-  descriptionValue: '',
-  image: null,
+  title: '',
+  text: '',
+  public: 0,
+  blog_img: null,
   imagePreview: '',
+  isEditable: false,
 };
 
-export default function DiaryForm(props) {
+export default function DiaryForm({ initialValues }) {
   const classes = useStyles();
   const [state, setState] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,8 +46,20 @@ export default function DiaryForm(props) {
   const { auth } = useAuth();
 
   useEffect(() => {
+    if (entries.entriesList.length) {
+      return;
+    }
+
     dispatchFetchEntries(auth.access_token);
-  }, [dispatchFetchEntries, auth.access_token]);
+  }, [dispatchFetchEntries, auth.access_token, entries.entriesList]);
+
+  useEffect(() => {
+    if (!initialValues) {
+      return;
+    }
+
+    setState(initialValues);
+  }, [initialValues]);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -69,7 +83,7 @@ export default function DiaryForm(props) {
       readerImage.onload = (fileEvent) => {
         setState({
           ...state,
-          image: file,
+          blog_img: file,
           imagePreview: fileEvent.target.result,
         });
       };
@@ -77,17 +91,21 @@ export default function DiaryForm(props) {
     }
   };
 
-  const createNewRecord = async (publicFlag) => {
+  const createNewRecord = async () => {
     const formData = new FormData();
-    formData.append('title', state.titleValue);
-    formData.append('text', state.descriptionValue);
-    formData.append('public', publicFlag);
-    formData.append('blog_img', state.image);
+    formData.append('title', state.title);
+    formData.append('text', state.text);
+    formData.append('public', state.public);
+    formData.append('blog_img', state.blog_img);
+
+    const method = state.isEdit ? 'PUT' : 'POST';
+    const url = state.isEdit ? `/blog/${state.id}` : '/blog';
+
     setIsLoading(true);
     try {
       const result = await Api({
-        url: '/blog',
-        method: 'POST',
+        url,
+        method,
         data: formData,
         headers: {
           Authorization: 'bearer' + auth.access_token,
@@ -95,7 +113,7 @@ export default function DiaryForm(props) {
         },
       });
       dispatchUpdateEntries([
-        { ...result.data, image: state.imagePreview },
+        { ...result.data, blog_img: state.imagePreview },
         ...entries.entriesList,
       ]);
     } catch (error) {
@@ -108,7 +126,7 @@ export default function DiaryForm(props) {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    createNewRecord(0);
+    createNewRecord();
     setState(initialState);
   };
 
@@ -128,8 +146,8 @@ export default function DiaryForm(props) {
           margin="dense"
           label="Название"
           variant="outlined"
-          name="titleValue"
-          value={state.titleValue}
+          name="title"
+          value={state.title}
           onChange={onChangeHandler}
         />
         <TextField
@@ -139,8 +157,8 @@ export default function DiaryForm(props) {
           margin="dense"
           label="Описание"
           variant="outlined"
-          name="descriptionValue"
-          value={state.descriptionValue}
+          name="text"
+          value={state.text}
           onChange={onChangeHandler}
         />
         <Grid
@@ -156,9 +174,7 @@ export default function DiaryForm(props) {
                 aria-label="Создать запись"
                 variant="contained"
                 onClick={formSubmitHandler}
-                disabled={
-                  !state.titleValue.length || !state.descriptionValue.length
-                }
+                disabled={!state.title.length || !state.text.length}
               >
                 <AddCircleIcon fontSize="default" />
               </IconButton>
@@ -174,10 +190,6 @@ export default function DiaryForm(props) {
       ) : (
         <DiaryEntries
           entries={entries.entriesList}
-          title={entries.entriesList.title}
-          description={entries.entriesList.description}
-          date={entries.entriesList.date}
-          id={entries.entriesList.id}
           deleteDiaryEntry={deleteDiaryEntry}
         />
       )}

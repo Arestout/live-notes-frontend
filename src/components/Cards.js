@@ -17,6 +17,7 @@ import ReadMoreButton from './Buttons/ReadMoreButton';
 import DeletePostButton from './Buttons/DeletePostButton';
 import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
+import EditPostButton from './Buttons/EditPostButton';
 
 const Cards = (props) => {
   const {
@@ -65,6 +66,7 @@ const Cards = (props) => {
         {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
         <DeletePostButton id={id} onDelete={onDelete} />
+        <EditPostButton to={`/edit/${id}`} />
       </CardActions>
     </Card>
   );

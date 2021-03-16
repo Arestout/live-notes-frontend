@@ -28,8 +28,12 @@ export default function MyDiaryList() {
   const classes = useStyles();
 
   useEffect(() => {
+    if (entries.entriesList.length) {
+      return;
+    }
+
     dispatchFetchEntries(auth.access_token);
-  }, [dispatchFetchEntries, auth.access_token]);
+  }, [dispatchFetchEntries, auth.access_token, entries.entriesList]);
 
   return (
     <div style={{ padding: 12 }}>
