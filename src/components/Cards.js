@@ -39,7 +39,6 @@ const Cards = (props) => {
     access_token,
     id,
   };
-
   return (
     <Card>
       <CardHeader
@@ -48,7 +47,10 @@ const Cards = (props) => {
         title={title}
         subheader={date}
       />
-      <CardMedia style={{ height: '150px' }} image={image} />
+      <CardMedia
+        style={{ height: '150px' }}
+        image={image || 'https://picsum.photos/seed/picsum/200/300'}
+      />
       <CardContent>
         <Typography variant="body2" component="p">
           {description}

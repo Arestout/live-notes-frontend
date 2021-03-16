@@ -22,6 +22,11 @@ export default function CreateDiary() {
   const { auth } = useAuth();
   const { user } = auth;
   const classes = useStyles();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <>
       <Container className="App">
