@@ -48,7 +48,7 @@ const Cards = (props) => {
         subheader={date}
       />
       <CardMedia
-        style={{ height: '150px' }}
+        style={{ height: '150px', backgroundSize: 'contain' }}
         image={image || 'https://picsum.photos/seed/picsum/200/300'}
       />
       <CardContent>

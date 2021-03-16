@@ -47,7 +47,7 @@ export default function DiaryEntries(props) {
                 subheader={entry.date}
               />
               <CardMedia
-                style={{ height: '150px' }}
+                style={{ height: '150px', backgroundSize: 'contain' }}
                 image={
                   entry.image || 'https://picsum.photos/seed/picsum/200/300'
                 }
