@@ -33,20 +33,16 @@ const Cards = (props) => {
   const {
     auth: { access_token },
   } = useAuth();
-  const { dispatchDeleteEntry, dispatchUpdateEntries } = useEntries();
+  const { entries, dispatchDeleteEntry, dispatchUpdateEntries } = useEntries();
 
   const onDelete = (id) => {
     const filteredEntries = entries.entriesList.filter(
-      (entry) => entry.id === id
+      (entry) => entry.id !== id
     );
     dispatchUpdateEntries(filteredEntries);
     dispatchDeleteEntry({ id, access_token });
   };
 
-  const data = {
-    access_token,
-    id,
-  };
   return (
     <Card>
       <CardHeader
@@ -68,7 +64,7 @@ const Cards = (props) => {
         {!likeHidden && <LikeButton />}
         {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
-        <DeletePostButton data={data} onDelete={dispatchDeleteEntry} />
+        <DeletePostButton id={id} onDelete={onDelete} />
       </CardActions>
     </Card>
   );

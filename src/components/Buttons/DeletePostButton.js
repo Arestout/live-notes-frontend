@@ -5,10 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip } from '@material-ui/core';
 
 export default function DeletePostButton(props) {
-  const {
-    onDelete,
-    data: { access_token, id },
-  } = props;
+  const { onDelete, id } = props;
   return (
     <div>
       <label htmlFor="icon-button-file">
@@ -16,7 +13,7 @@ export default function DeletePostButton(props) {
           <IconButton
             aria-label="delete"
             color="secondary"
-            onClick={() => onDelete({ access_token, id })}
+            onClick={() => onDelete(id)}
           >
             <DeleteIcon />
           </IconButton>

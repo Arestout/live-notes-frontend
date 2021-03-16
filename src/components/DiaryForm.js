@@ -1,7 +1,4 @@
-import React from 'react';
-import axios from 'axios';
-
-import Api from '../api/api';
+import React, { useState, useEffect } from 'react';
 import UploadPhotoButton from './Buttons/UploadPhotoButton';
 import DiaryEntries from './DiaryEntries';
 import {
@@ -11,70 +8,55 @@ import {
   Tooltip,
   Grid,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
+import Api from '../api/api';
+import { useAuth } from '../hooks/useAuth';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { useEntries } from '../hooks/useEntries';
+import Loader from './Loader/Loader';
 
-class DiaryForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      titleValue: '',
-      descriptionValue: '',
-      diaryEntries: [],
-      image: null,
-      imagePreview: '',
-    };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.formSubmitHandler = this.formSubmitHandler.bind(this);
-    this.deleteDiaryEntry = this.deleteDiaryEntry.bind(this);
-  }
+const useStyles = makeStyles((theme) => ({
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
-  componentDidMount() {
-    this.hydrateStateWithLocalStorage();
+const initialState = {
+  titleValue: '',
+  descriptionValue: '',
+  image: null,
+  imagePreview: '',
+};
 
-    window.addEventListener(
-      'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
-    );
-  }
+export default function DiaryForm(props) {
+  const classes = useStyles();
+  const [state, setState] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    entries,
+    dispatchUpdateEntries,
+    dispatchFetchEntries,
+    dispatchDeleteEntry,
+  } = useEntries();
+  const { auth } = useAuth();
 
-  componentWillUnmount() {
-    window.removeEventListener(
-      'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
-    );
-    this.saveStateToLocalStorage();
-  }
+  useEffect(() => {
+    dispatchFetchEntries(auth.access_token);
+  }, [dispatchFetchEntries, auth.access_token]);
 
-  saveStateToLocalStorage() {
-    for (let key in this.state) {
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
-    }
-  }
-
-  hydrateStateWithLocalStorage() {
-    for (let key in this.state) {
-      if (localStorage.hasOwnProperty(key)) {
-        let value = localStorage.getItem(key);
-        try {
-          value = JSON.parse(value);
-          this.setState({ [key]: value });
-        } catch (e) {
-          this.setState({ [key]: value });
-        }
-      }
-    }
-  }
-
-  onChangeHandler(event) {
+  const onChangeHandler = (event) => {
     const name = event.target.name;
 
-    this.setState({
+    setState({
+      ...state,
       [name]: event.target.value,
     });
-  }
+  };
 
-  handleFileChange = (event) => {
+  const handleFileChange = (event) => {
     console.log(event);
     const file = event.target.files[0];
 
@@ -85,7 +67,8 @@ class DiaryForm extends React.Component {
       }
       const readerImage = new FileReader();
       readerImage.onload = (fileEvent) => {
-        this.setState({
+        setState({
+          ...state,
           image: file,
           imagePreview: fileEvent.target.result,
         });
@@ -94,139 +77,110 @@ class DiaryForm extends React.Component {
     }
   };
 
-  formSubmitHandler(event) {
-    event.preventDefault();
-    const diaryEntries = [...this.state.diaryEntries];
-
-    const date = new Date().toLocaleDateString();
-    const id = 1 + Math.random();
-
-    const newEntry = {
-      title: this.state.titleValue,
-      description: this.state.descriptionValue,
-      date: date,
-      id: id,
-      image: this.state.imagePreview,
-    };
-
-    this.createNewRecord(
-      newEntry.title,
-      newEntry.description,
-      0,
-      this.state.image
-    );
-
-    diaryEntries.unshift(newEntry);
-
-    this.setState({
-      titleValue: '',
-      descriptionValue: '',
-      diaryEntries,
-      image: null,
-    });
-  }
-
-  createNewRecord = async (title, text, publicFlag, image) => {
+  const createNewRecord = async (publicFlag) => {
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('text', text);
+    formData.append('title', state.titleValue);
+    formData.append('text', state.descriptionValue);
     formData.append('public', publicFlag);
-    formData.append('blog_img', image);
-    return await Api({
-      url: '/blog',
-      method: 'POST',
-      // {
-      //   title,
-      //   text,
-      //   public: publicFlag,
-      //   blog_img: image,
-      // },
-      data: formData,
-
-      headers: {
-        Authorization: 'bearer' + this.props.auth.access_token,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  };
-
-  deleteDiaryEntry = async (id) => {
-    const diaryEntries = [...this.state.diaryEntries];
-    const updatedDiaryEntries = diaryEntries.filter((entry) => entry.id !== id);
-    this.setState({
-      diaryEntries: updatedDiaryEntries,
-    });
-    await Api.delete(
-      `/blog/${id}`,
-      {},
-      {
+    formData.append('blog_img', state.image);
+    setIsLoading(true);
+    try {
+      const result = await Api({
+        url: '/blog',
+        method: 'POST',
+        data: formData,
         headers: {
-          Authorization: 'bearer' + this.props.auth.access_token,
+          Authorization: 'bearer' + auth.access_token,
+          'Content-Type': 'multipart/form-data',
         },
-      }
-    );
+      });
+      dispatchUpdateEntries([
+        { ...result.data, image: state.imagePreview },
+        ...entries.entriesList,
+      ]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  render() {
-    return (
-      <Container maxWidth="md" className="DiaryForm">
-        <form>
-          <TextField
-            fullWidth
-            margin="dense"
-            label="Название"
-            variant="outlined"
-            name="titleValue"
-            value={this.state.titleValue}
-            onChange={this.onChangeHandler}
-          />
-          <TextField
-            multiline
-            rows="10"
-            fullWidth
-            margin="dense"
-            label="Описание"
-            variant="outlined"
-            name="descriptionValue"
-            value={this.state.descriptionValue}
-            onChange={this.onChangeHandler}
-          />
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Tooltip title="Добавить новую запись в дневник">
-              <span>
-                <IconButton
-                  color="primary"
-                  aria-label="Создать запись"
-                  variant="contained"
-                  onClick={this.formSubmitHandler}
-                  disabled={
-                    !this.state.titleValue.length ||
-                    !this.state.descriptionValue.length
-                  }
-                >
-                  <AddCircleIcon fontSize="default" />
-                </IconButton>
-              </span>
-            </Tooltip>
-            <UploadPhotoButton handleChange={this.handleFileChange} />
-          </Grid>
-        </form>
-        <DiaryEntries
-          entries={this.state.diaryEntries}
-          title={this.state.diaryEntries.title}
-          description={this.state.diaryEntries.description}
-          date={this.state.diaryEntries.date}
-          id={this.state.diaryEntries.id}
-          deleteDiaryEntry={this.deleteDiaryEntry}
-        />
-      </Container>
-    );
-  }
-}
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
 
-export default DiaryForm;
+    createNewRecord(0);
+    setState(initialState);
+  };
+
+  const deleteDiaryEntry = async (id) => {
+    const updatedDiaryEntries = entries.entriesList.filter(
+      (entry) => entry.id !== id
+    );
+    dispatchUpdateEntries(updatedDiaryEntries);
+    dispatchDeleteEntry({ id, access_token: auth.access_token });
+  };
+
+  return (
+    <Container maxWidth="md" className="DiaryForm">
+      <form>
+        <TextField
+          fullWidth
+          margin="dense"
+          label="Название"
+          variant="outlined"
+          name="titleValue"
+          value={state.titleValue}
+          onChange={onChangeHandler}
+        />
+        <TextField
+          multiline
+          rows="10"
+          fullWidth
+          margin="dense"
+          label="Описание"
+          variant="outlined"
+          name="descriptionValue"
+          value={state.descriptionValue}
+          onChange={onChangeHandler}
+        />
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Tooltip title="Добавить новую запись в дневник">
+            <span>
+              <IconButton
+                color="primary"
+                aria-label="Создать запись"
+                variant="contained"
+                onClick={formSubmitHandler}
+                disabled={
+                  !state.titleValue.length || !state.descriptionValue.length
+                }
+              >
+                <AddCircleIcon fontSize="default" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <UploadPhotoButton handleChange={handleFileChange} />
+        </Grid>
+      </form>
+      {isLoading || entries.isLoading ? (
+        <div className={classes.loader}>
+          <Loader />
+        </div>
+      ) : (
+        <DiaryEntries
+          entries={entries.entriesList}
+          title={entries.entriesList.title}
+          description={entries.entriesList.description}
+          date={entries.entriesList.date}
+          id={entries.entriesList.id}
+          deleteDiaryEntry={deleteDiaryEntry}
+        />
+      )}
+    </Container>
+  );
+}

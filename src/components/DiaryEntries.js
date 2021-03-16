@@ -49,7 +49,7 @@ export default function DiaryEntries(props) {
               <CardMedia
                 style={{ height: '150px', backgroundSize: 'contain' }}
                 image={
-                  entry.image || 'https://picsum.photos/seed/picsum/200/300'
+                  entry.blog_img || 'https://picsum.photos/seed/picsum/200/300'
                 }
               />
               <CardContent>

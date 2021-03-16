@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 import { Typography, Container, Box } from '@material-ui/core';
@@ -38,7 +38,7 @@ export default function CreateDiary() {
         <Typography component="h1" variant="h5" align="center">
           Создать запись
         </Typography>
-        <DiaryForm auth={auth} />
+        <DiaryForm />
         <Box mt={5}></Box>
       </Container>
       <Box mt={5}></Box>
