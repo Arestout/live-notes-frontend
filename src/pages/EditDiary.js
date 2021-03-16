@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Copyright from '../components/Copyright/Copyright';
 import ImageAvatar from '../components/Avatar/Avatar';
 import DiaryForm from '../components/DiaryForm';
+import { useEntries } from '../hooks/useEntries';
 
 const useStyles = makeStyles((theme) => ({
   avatarContainer: {
@@ -18,14 +19,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateDiary() {
+export default function EditDiary({ match }) {
   const { auth } = useAuth();
   const { user } = auth;
   const classes = useStyles();
+  const { entries } = useEntries();
 
   if (!user) {
     return null;
   }
+  const id = match.params.id;
+  const entryValues = entries.entriesList.filter((entry) => entry.id == id)[0];
+  entryValues.isEdit = true;
 
   return (
     <>
@@ -36,9 +41,9 @@ export default function CreateDiary() {
           <p>{user.login}</p>
         </div>
         <Typography component="h1" variant="h5" align="center">
-          Создать запись
+          Редактировать запись
         </Typography>
-        <DiaryForm />
+        <DiaryForm initialValues={entryValues} />
         <Box mt={5}></Box>
       </Container>
       <Box mt={5}></Box>

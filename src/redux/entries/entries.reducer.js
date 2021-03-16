@@ -2,7 +2,7 @@ import * as types from './entries.types';
 
 const initialState = {
   isLoading: false,
-  entriesList: null,
+  entriesList: [],
   error: '',
 };
 
