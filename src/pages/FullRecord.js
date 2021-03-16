@@ -45,7 +45,12 @@ export default function FullRecord(props) {
             title={recordData.title}
             subheader={new Date(recordData.updated_at).toLocaleString('ru')}
           />
-          <CardMedia style={{ height: '150px' }} image={recordData.image} />
+          <CardMedia
+            style={{ height: '600px' }}
+            image={
+              recordData.blog_img || 'https://picsum.photos/seed/picsum/200/300'
+            }
+          />
           <Typography component="p">{recordData.text}</Typography>
         </>
       ) : (

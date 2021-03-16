@@ -12,6 +12,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../hooks/useAuth';
+import { Box } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(10),
+    position: 'relative',
   },
   title: {
     flexGrow: 1,
@@ -58,34 +60,36 @@ export default function Navbar({ user }) {
               <LibraryBooksIcon />
             </Typography>
           </Button>
-          <Button color="inherit" component={Link} to="/">
-            Главная
-          </Button>
-          <Button color="inherit" component={Link} to="/diaries">
-            Дневники
-          </Button>
-          {user ? (
-            <>
-              <Button color="inherit" component={Link} to="/create">
-                Создать запись
-              </Button>
-              <Button color="inherit" component={Link} to="/diary-list">
-                Мои записи
-              </Button>
-              <Button color="inherit" onClick={onLogOut}>
-                Выйти
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button color="inherit" component={Link} to="/sign-in">
-                Войти
-              </Button>
-              <Button color="inherit" component={Link} to="/sign-up">
-                Регистрация
-              </Button>
-            </>
-          )}
+          <Box className={classes.menuButton}>
+            <Button color="inherit" component={Link} to="/">
+              Главная
+            </Button>
+            <Button color="inherit" component={Link} to="/diaries">
+              Дневники
+            </Button>
+            {user ? (
+              <>
+                <Button color="inherit" component={Link} to="/create">
+                  Создать запись
+                </Button>
+                <Button color="inherit" component={Link} to="/diary-list">
+                  Мои записи
+                </Button>
+                <Button color="inherit" onClick={onLogOut}>
+                  Выйти
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button color="inherit" component={Link} to="/sign-in">
+                  Войти
+                </Button>
+                <Button color="inherit" component={Link} to="/sign-up">
+                  Регистрация
+                </Button>
+              </>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
     </ThemeProvider>

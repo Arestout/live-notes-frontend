@@ -21,6 +21,8 @@ class DiaryForm extends React.Component {
       titleValue: '',
       descriptionValue: '',
       diaryEntries: [],
+      image: null,
+      imagePreview: '',
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.formSubmitHandler = this.formSubmitHandler.bind(this);
@@ -72,6 +74,26 @@ class DiaryForm extends React.Component {
     });
   }
 
+  handleFileChange = (event) => {
+    console.log(event);
+    const file = event.target.files[0];
+
+    if (file) {
+      if (file.size > 600 * 1024) {
+        window.alert('Файл больше чем 600 кб.Выберите другой файл');
+        return false;
+      }
+      const readerImage = new FileReader();
+      readerImage.onload = (fileEvent) => {
+        this.setState({
+          image: file,
+          imagePreview: fileEvent.target.result,
+        });
+      };
+      readerImage.readAsDataURL(file);
+    }
+  };
+
   formSubmitHandler(event) {
     event.preventDefault();
     const diaryEntries = [...this.state.diaryEntries];
@@ -84,9 +106,15 @@ class DiaryForm extends React.Component {
       description: this.state.descriptionValue,
       date: date,
       id: id,
+      image: this.state.imagePreview,
     };
 
-    this.createNewRecord(newEntry.title, newEntry.description, 0);
+    this.createNewRecord(
+      newEntry.title,
+      newEntry.description,
+      0,
+      this.state.image
+    );
 
     diaryEntries.unshift(newEntry);
 
@@ -94,23 +122,32 @@ class DiaryForm extends React.Component {
       titleValue: '',
       descriptionValue: '',
       diaryEntries,
+      image: null,
     });
   }
 
-  createNewRecord = async (title, text, publicFlag) => {
-    return await Api.post(
-      '/blog',
-      {
-        title,
-        text,
-        public: publicFlag,
+  createNewRecord = async (title, text, publicFlag, image) => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('text', text);
+    formData.append('public', publicFlag);
+    formData.append('blog_img', image);
+    return await Api({
+      url: '/blog',
+      method: 'POST',
+      // {
+      //   title,
+      //   text,
+      //   public: publicFlag,
+      //   blog_img: image,
+      // },
+      data: formData,
+
+      headers: {
+        Authorization: 'bearer' + this.props.auth.access_token,
+        'Content-Type': 'multipart/form-data',
       },
-      {
-        headers: {
-          Authorization: 'bearer' + this.props.auth.access_token,
-        },
-      }
-    );
+    });
   };
 
   deleteDiaryEntry = async (id) => {
@@ -176,7 +213,7 @@ class DiaryForm extends React.Component {
                 </IconButton>
               </span>
             </Tooltip>
-            <UploadPhotoButton />
+            <UploadPhotoButton handleChange={this.handleFileChange} />
           </Grid>
         </form>
         <DiaryEntries

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UploadPhotoButton() {
+export default function UploadPhotoButton(props) {
   const classes = useStyles();
 
   return (
@@ -25,6 +25,7 @@ export default function UploadPhotoButton() {
         className={classes.input}
         id="icon-button-file"
         type="file"
+        onChange={props.handleChange}
       />
       <label htmlFor="icon-button-file">
         <Tooltip title="Загрузить фото">

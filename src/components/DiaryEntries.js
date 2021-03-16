@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DiaryEntries(props) {
   const classes = useStyles();
+
   return (
     <div>
       <ul>
@@ -47,7 +48,9 @@ export default function DiaryEntries(props) {
               />
               <CardMedia
                 style={{ height: '150px' }}
-                image={entry.image || ''}
+                image={
+                  entry.image || 'https://picsum.photos/seed/picsum/200/300'
+                }
               />
               <CardContent>
                 <Typography variant="body2" component="p">

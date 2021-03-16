@@ -28,7 +28,7 @@ export default function MyDiaryList() {
     <div style={{ padding: 12 }}>
       <Grid container spacing={3}>
         {entries.entriesList
-          ? Object.values(entries.entriesList).map((item) => {
+          ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>
                   <Card
@@ -37,7 +37,7 @@ export default function MyDiaryList() {
                     title={item.title}
                     date={new Date(item.updated_at).toLocaleString('ru')}
                     description={item.text}
-                    image={''}
+                    image={item.blog_img}
                     avatarUrl="/images/image-8.jpg"
                     likeHidden
                     commentHidden
