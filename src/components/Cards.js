@@ -33,7 +33,15 @@ const Cards = (props) => {
   const {
     auth: { access_token },
   } = useAuth();
-  const { dispatchDeleteEntry } = useEntries();
+  const { dispatchDeleteEntry, dispatchUpdateEntries } = useEntries();
+
+  const onDelete = (id) => {
+    const filteredEntries = entries.entriesList.filter(
+      (entry) => entry.id === id
+    );
+    dispatchUpdateEntries(filteredEntries);
+    dispatchDeleteEntry({ id, access_token });
+  };
 
   const data = {
     access_token,

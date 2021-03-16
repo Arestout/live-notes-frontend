@@ -36,7 +36,6 @@ export const deleteEntry = ({ id, access_token }) => async (dispatch) => {
         Authorization: 'bearer' + access_token,
       },
     });
-    dispatch(fetchEntries(access_token));
   } catch (error) {
     console.log(error);
     dispatch({

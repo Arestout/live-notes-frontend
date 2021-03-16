@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Card from '../components/Cards';
 import { Box, Grid } from '@material-ui/core';
-
 import { makeStyles } from '@material-ui/core/styles';
+
 import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
+import Loader from '../components/Loader/Loader';
 import Copyright from '../components/Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
   },
 }));
 
@@ -26,8 +33,13 @@ export default function MyDiaryList() {
 
   return (
     <div style={{ padding: 12 }}>
+      {entries.isLoading && (
+        <div className={classes.loader}>
+          <Loader />
+        </div>
+      )}
       <Grid container spacing={3}>
-        {entries.entriesList
+        {!entries.isLoading && entries.entriesList
           ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>

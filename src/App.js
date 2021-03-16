@@ -2,7 +2,12 @@ import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import './App.css';
 import Home from './pages/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from 'react-router-dom';
 import Diaries from './pages/Diaries';
 import SignIn from './pages/AuthSignIn';
 import SignUp from './pages/AuthSignUp';
@@ -31,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const { auth, dispatchFetchAuth } = useAuth();
+  const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
@@ -39,12 +45,9 @@ function App(props) {
     }
   }, [auth.access_token, dispatchFetchAuth]);
 
-  // if (auth.isLoading) {
-  //   return (
-  //     <div className={classes.loader}>
-  //       <Loader />
-  //     </div>
-  //   );
+  // if (auth.error === 'Request failed with status code 401') {
+  //   window.localStorage.removeItem('access_token');
+  //   return history.push('/sign-in');
   // }
 
   return (
