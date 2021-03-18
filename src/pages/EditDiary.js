@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 import { Typography, Container, Box } from '@material-ui/core';
@@ -28,9 +28,12 @@ export default function EditDiary({ match }) {
   if (!user) {
     return null;
   }
+
   const id = match.params.id;
   const entryValues = entries.entriesList.filter((entry) => entry.id == id)[0];
-  entryValues.isEdit = true;
+  if (entryValues) {
+    entryValues.isEdit = true;
+  }
 
   return (
     <>
