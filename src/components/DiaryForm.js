@@ -30,28 +30,15 @@ const initialState = {
   public: 0,
   blog_img: null,
   imagePreview: '',
-  isEditable: false,
+  isEdit: false,
 };
 
 export default function DiaryForm({ initialValues }) {
   const classes = useStyles();
   const [state, setState] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    entries,
-    dispatchUpdateEntries,
-    dispatchFetchEntries,
-    dispatchDeleteEntry,
-  } = useEntries();
+  const { entries, dispatchUpdateEntries, dispatchDeleteEntry } = useEntries();
   const { auth } = useAuth();
-
-  useEffect(() => {
-    if (entries.entriesList.length) {
-      return;
-    }
-
-    dispatchFetchEntries(auth.access_token);
-  }, [dispatchFetchEntries, auth.access_token, entries.entriesList]);
 
   useEffect(() => {
     if (!initialValues) {
@@ -83,7 +70,7 @@ export default function DiaryForm({ initialValues }) {
       readerImage.onload = (fileEvent) => {
         setState({
           ...state,
-          blog_img: file,
+          blog_img: fileEvent.target.result,
           imagePreview: fileEvent.target.result,
         });
       };
@@ -100,7 +87,7 @@ export default function DiaryForm({ initialValues }) {
 
     const method = state.isEdit ? 'PUT' : 'POST';
     const url = state.isEdit ? `/blog/${state.id}` : '/blog';
-
+    console.log(formData);
     setIsLoading(true);
     try {
       const result = await Api({

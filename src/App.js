@@ -14,6 +14,7 @@ import ClippedDrawer from './components/Drawer/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from './hooks/useAuth';
 import Loader from './components/Loader/Loader';
+import { useEntries } from './hooks/useEntries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,13 +33,15 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const { auth, dispatchFetchAuth } = useAuth();
+  const { dispatchFetchEntries } = useEntries();
   const classes = useStyles();
 
   useEffect(() => {
     if (auth.access_token) {
       dispatchFetchAuth(auth.access_token);
+      dispatchFetchEntries(auth.access_token);
     }
-  }, [auth.access_token, dispatchFetchAuth]);
+  }, [auth.access_token, dispatchFetchAuth, dispatchFetchEntries]);
 
   if (auth.error === 'Request failed with status code 401') {
     window.localStorage.removeItem('access_token');
