@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import { ThemeProvider } from '@material-ui/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,15 +22,15 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  appBarRoot: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
-    marginRight: theme.spacing(10),
-    position: 'relative',
+    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
@@ -52,8 +51,12 @@ export default function Navbar({ user }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
+      <AppBar
+        position="static"
+        classes={{ root: classes.appBarRoot }}
+        className={classes.appBar}
+      >
+        <Toolbar classes={{ root: classes.appBarRoot }}>
           <Button color="inherit" component={Link} to="/">
             <Typography variant="h5" className={classes.title}>
               LiveNote

@@ -7,7 +7,7 @@ const Content = () => {
   const getMakerCard = (MakerObj) => {
     return (
       <Grid key={MakerObj.index} item xs={6} sm={4}>
-        <Card {...MakerObj} />
+        <Card {...MakerObj} editHidden deleteHidden />
       </Grid>
     );
   };

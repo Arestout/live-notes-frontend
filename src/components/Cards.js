@@ -29,6 +29,8 @@ const Cards = (props) => {
     id,
     likeHidden = false,
     commentHidden = false,
+    deleteHidden = false,
+    editHidden = false,
     titleClassName,
   } = props;
   const {
@@ -65,8 +67,8 @@ const Cards = (props) => {
         {!likeHidden && <LikeButton />}
         {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
-        <DeletePostButton id={id} onDelete={onDelete} />
-        <EditPostButton to={`/edit/${id}`} />
+        {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
+        {!editHidden && <EditPostButton to={`/edit/${id}`} />}
       </CardActions>
     </Card>
   );
