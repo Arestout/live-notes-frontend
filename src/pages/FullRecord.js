@@ -9,14 +9,32 @@ import {
   CardMedia,
   Box,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../components/Loader/Loader';
 import Copyright from '../components/Copyright/Copyright';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  content: {
+    width: '100%',
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  },
+}));
 
 export default function FullRecord(props) {
   const { auth } = useAuth();
   const { id } = props.match.params;
 
   const [recordData, setRecordData] = useState(null);
+
+  const classes = useStyles();
 
   useEffect(() => {
     const UserRecord = async () => {
@@ -35,7 +53,6 @@ export default function FullRecord(props) {
       }
     });
   }, [auth.access_token, id]);
-
   return (
     <Container>
       {recordData ? (
@@ -45,18 +62,21 @@ export default function FullRecord(props) {
             title={recordData.title}
             subheader={new Date(recordData.updated_at).toLocaleString('ru')}
           />
-          <CardMedia
-            style={{ backgroundSize: 'contain', height: '600px' }}
-            image={
-              recordData.blog_img || 'https://picsum.photos/seed/picsum/200/300'
-            }
-          />
-          <Box mt={5}>
-            <Typography component="p">{recordData.text}</Typography>
-          </Box>
+          {recordData.blog_img !== 'null' && (
+            <>
+              <CardMedia
+                style={{ backgroundSize: 'contain', height: '600px' }}
+                image={recordData.blog_img}
+              />
+              <Box mt={5} />
+            </>
+          )}
+          <Typography component="p">{recordData.text}</Typography>
         </>
       ) : (
-        <Loader />
+        <div className={classes.loader}>
+          <Loader />
+        </div>
       )}
       <Box mt={5}>
         <Copyright />
