@@ -8,6 +8,7 @@ import {
   Card,
   Avatar,
   CardMedia,
+  Box,
 } from '@material-ui/core';
 
 import LikeButton from './Buttons/LikeButton';
@@ -54,10 +55,14 @@ const Cards = (props) => {
         title={title}
         subheader={date}
       />
-      <CardMedia
-        style={{ height: '150px', backgroundSize: 'contain' }}
-        image={image || 'https://picsum.photos/seed/picsum/200/300'}
-      />
+      {image ? (
+        <CardMedia
+          style={{ height: '150px', backgroundSize: 'contain' }}
+          image={image}
+        />
+      ) : (
+        <Box mt={3}></Box>
+      )}
       <CardContent>
         <Typography variant="body2" component="p">
           {description}

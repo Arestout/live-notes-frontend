@@ -11,6 +11,7 @@ import {
   CardActions,
   CardHeader,
   Card,
+  Box,
 } from '@material-ui/core';
 import DeletePostButton from './Buttons/DeletePostButton';
 
@@ -44,12 +45,14 @@ export default function DiaryEntries(props) {
                 title={entry.title}
                 subheader={entry.date}
               />
-              <CardMedia
-                style={{ height: '150px', backgroundSize: 'contain' }}
-                image={
-                  entry.blog_img || 'https://picsum.photos/seed/picsum/200/300'
-                }
-              />
+              {entry.blog_img ? (
+                <CardMedia
+                  style={{ height: '150px', backgroundSize: 'contain' }}
+                  image={entry.blog_img}
+                />
+              ) : (
+                <Box mt={3}></Box>
+              )}
               <CardContent>
                 <Typography variant="body2" component="p">
                   {entry.text}
