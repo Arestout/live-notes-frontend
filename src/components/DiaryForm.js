@@ -7,6 +7,8 @@ import {
   IconButton,
   Tooltip,
   Grid,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -50,15 +52,15 @@ export default function DiaryForm({ initialValues }) {
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
+    const value = event.target.value;
 
     setState({
       ...state,
-      [name]: event.target.value,
+      [name]: name == 'public' ? +event.target.checked : value,
     });
   };
 
   const handleFileChange = (event) => {
-    console.log(event);
     const file = event.target.files[0];
 
     if (file) {
@@ -87,7 +89,6 @@ export default function DiaryForm({ initialValues }) {
 
     const method = state.isEdit ? 'PUT' : 'POST';
     const url = state.isEdit ? `/blog/${state.id}` : '/blog';
-    console.log(formData);
     setIsLoading(true);
     try {
       const result = await Api({
@@ -168,6 +169,18 @@ export default function DiaryForm({ initialValues }) {
             </span>
           </Tooltip>
           <UploadPhotoButton handleChange={handleFileChange} />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="public"
+                color="primary"
+                onChange={onChangeHandler}
+                checked={!!state.public}
+              />
+            }
+            label="Сделать запись открытой"
+            labelPlacement="end"
+          />
         </Grid>
       </form>
       {isLoading || entries.isLoading ? (
