@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './DiariesCardItem.css';
+import HeartButton from './Buttons/LikeButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons';
 
@@ -37,8 +38,8 @@ function DiariesCardItem(props) {
             <p className="diary__item__text">{props.text}</p>
             <div className="diaries__footer">
               <div className="diaries__icons">
-                <div className="social_icon_like">
-                  <FontAwesomeIcon icon={faHeart} />
+                <div className="social_icon_like heart">
+                  <HeartButton />
                 </div>
                 <div className="social_icon_like">
                   <FontAwesomeIcon icon={faComment} />
