@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Card from '../components/Cards';
+import Cards from '../components/Cards';
 import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -47,8 +47,8 @@ export default function MyDiaryList() {
           ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>
-                  <Card
-                    titleClassName={classes.title}
+                  <Cards
+                    className={classes.title}
                     id={item.id}
                     title={item.title}
                     date={new Date(item.updated_at).toLocaleString('ru')}
