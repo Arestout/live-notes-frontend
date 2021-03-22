@@ -19,10 +19,17 @@ const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 345,
     flexGrow: 1,
+    margin: '5px 0',
+    wordBreak: 'break-all',
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  text: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 }));
 
@@ -34,16 +41,12 @@ export default function DiaryEntries(props) {
       <ul>
         {props.entries.map((entry) => {
           return (
-            <Card
-              className={classes.card}
-              variant="outlined"
-              key={entry.id}
-              style={{ margin: '5px 0' }}
-            >
+            <Card className={classes.card} variant="outlined" key={entry.id}>
               <CardHeader
+                className={classes.card}
                 avatar={<ImageAvatar />}
                 title={entry.title}
-                subheader={entry.date}
+                subheader={new Date(entry.updated_at).toLocaleString('ru')}
               />
               {entry.blog_img ? (
                 <CardMedia
@@ -54,7 +57,11 @@ export default function DiaryEntries(props) {
                 <Box mt={3}></Box>
               )}
               <CardContent>
-                <Typography variant="body2" component="p">
+                <Typography
+                  variant="body2"
+                  component="p"
+                  className={classes.text}
+                >
                   {entry.text}
                 </Typography>
               </CardContent>

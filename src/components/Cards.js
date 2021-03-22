@@ -19,6 +19,8 @@ import DeletePostButton from './Buttons/DeletePostButton';
 import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
 import EditPostButton from './Buttons/EditPostButton';
+import styles from './Cards.module.css';
+import classNames from 'classnames';
 
 const Cards = (props) => {
   const {
@@ -50,7 +52,7 @@ const Cards = (props) => {
   return (
     <Card>
       <CardHeader
-        classes={{ content: titleClassName }}
+        classes={{ content: classNames(titleClassName, styles.title) }}
         avatar={<Avatar src={avatarUrl} />}
         title={title}
         subheader={date}
@@ -64,7 +66,7 @@ const Cards = (props) => {
         <Box mt={3}></Box>
       )}
       <CardContent>
-        <Typography variant="body2" component="p">
+        <Typography className={styles.clamp} variant="body2" component="p">
           {description}
         </Typography>
       </CardContent>
