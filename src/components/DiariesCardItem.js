@@ -37,24 +37,14 @@ function DiariesCardItem(props) {
             <p className="diary__item__text">{props.text}</p>
             <div className="diaries__footer">
               <div className="diaries__icons">
-                <Link
-                  className="social_icon_like"
-                  to="/"
-                  target="_blank"
-                  aria-label="Like"
-                >
+                <div className="social_icon_like">
                   <FontAwesomeIcon icon={faHeart} />
-                </Link>
-                <Link
-                  className="social_icon_like"
-                  to="/"
-                  target="_blank"
-                  aria-label="Comment"
-                >
+                </div>
+                <div className="social_icon_like">
                   <FontAwesomeIcon icon={faComment} />
-                </Link>
+                </div>
               </div>
-              <Link className="read__more" to="/">
+              <Link className="read__more" to="#">
                 Читать далее
               </Link>
             </div>

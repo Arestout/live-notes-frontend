@@ -1,10 +1,25 @@
 import React from 'react';
 import './DiariesCards.css';
 import DiariesCardItem from './DiariesCardItem';
+import CustomSelect from './CustomSelect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function DiariesCards() {
   return (
     <div className="container">
+      <div className="search_and_categories center">
+        <formAction className="search__line">
+          <div className="search__icon" onClick="#">
+            <FontAwesomeIcon icon={faSearch} />
+          </div>
+          <input className="search__input" placeholder="Поиск..."></input>
+        </formAction>
+        <div className="categories">
+          <h4 className="categories__heading">Категории </h4>
+          <CustomSelect />
+        </div>
+      </div>
       <div className="diarycards__container">
         <div className="diarycards__wrapper">
           <ul>

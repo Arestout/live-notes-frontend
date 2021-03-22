@@ -124,6 +124,10 @@
   text-decoration: none;
 }
 
+.social_icon_like {
+  cursor: pointer;
+}
+
 @media only screen and (min-width : 320px) and (max-width : 480px) {
   .diaries__item__avatar {
     height: 44px;
@@ -168,6 +172,22 @@
   .read__more {
     font-size: 11px;
   }
+  .search_and_categories {
+    display: block;
+  }
+  .center {
+    padding: 0;
+  }
+  .search__line {
+    width: 100%;
+  }
+  .categories {
+    width: 100%;
+    margin: 50px 0 0 0;
+  }
+  .categories__heading {
+    font-size: 14px;
+  }
 }
 
 @media only screen and (min-width : 480px) and (max-width : 768px) {
@@ -203,6 +223,19 @@
   }
   .diary__item__info {
     padding: 20px 17px 20px
+  }
+  .search_and_categories {
+    display: block;
+  }
+  .center {
+    padding: 0 5rem;
+  }
+  .search__line {
+    width: 100%;
+  }
+  .categories {
+    width: 100%;
+    margin: 50px 0 0 0;
   }
 }
 

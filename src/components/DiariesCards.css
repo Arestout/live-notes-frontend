@@ -3,6 +3,10 @@
   background: #fff;
 }
 
+.center {
+  padding: 0 4rem;
+}
+
 .diary__header {
   text-align: center;
   padding-bottom: 15px;
@@ -12,6 +16,55 @@
   display: flex;
   justify-content: space-around;
 }
+
+.search_and_categories{
+  display: flex;
+  justify-content: space-between;
+}
+
+.search__line {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background-color: #fff;
+  width: 35%;
+}
+
+.search__icon {
+  padding-left: 10px;
+}
+
+.search__icon:hover {
+  cursor: pointer;
+}
+
+.search__input {
+  border: none;
+  outline: none;
+  margin: 0 10px;
+  width: 100%;
+  border-bottom: 1px solid;
+  line-height: 30px;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  width: 300px;
+}
+
+.categories__select {
+  border: none;
+  outline: none;
+  height: 40px;
+}
+
+.Categories__filter {
+  width: 100%;
+  outline: none;
+  margin-left: 20px;
+}
+
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .diarycards__wrapper {
