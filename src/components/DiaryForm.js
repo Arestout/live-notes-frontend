@@ -13,6 +13,7 @@ import {
   MenuItem,
   InputLabel,
   Select,
+  CardMedia,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     minWidth: 120,
+  },
+  form: {
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -96,6 +100,7 @@ export default function DiaryForm({ initialValues }) {
     formData.append('text', state.text);
     formData.append('public', state.public);
     formData.append('blog_img', state.blog_img);
+    formData.append('category_id', state.category_id);
 
     const url = state.isEdit ? `/blog/${state.id}` : '/blog';
 
@@ -110,8 +115,19 @@ export default function DiaryForm({ initialValues }) {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      if (state.isEdit) {
+        const newEntries = entries.entriesList.map((entry) => {
+          if (entry.id === result.data.id) {
+            entry = result.data;
+            return entry;
+          }
+        });
+        return dispatchUpdateEntries(newEntries);
+      }
+
       dispatchUpdateEntries([
-        { ...result.data, blog_img: state.imagePreview },
+        { ...result.data, blog_img: state.blog_img },
         ...entries.entriesList,
       ]);
     } catch (error) {
@@ -138,7 +154,7 @@ export default function DiaryForm({ initialValues }) {
 
   return (
     <Container maxWidth="md" className="DiaryForm">
-      <form>
+      <form className={classes.form}>
         <TextField
           fullWidth
           margin="dense"
@@ -174,6 +190,16 @@ export default function DiaryForm({ initialValues }) {
             <MenuItem value={5}>5</MenuItem>
           </Select>
         </FormControl>
+        {state.isEdit && (
+          <CardMedia
+            style={{
+              height: '150px',
+              width: '200px',
+              backgroundSize: 'contain',
+            }}
+            image={state.blog_img}
+          />
+        )}
         <Grid
           container
           direction="row"
@@ -195,6 +221,7 @@ export default function DiaryForm({ initialValues }) {
           </Tooltip>
           <UploadPhotoButton handleChange={handleFileChange} />
           <FormControlLabel
+            className={classes.formControl}
             control={
               <Checkbox
                 name="public"
