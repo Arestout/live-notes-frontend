@@ -20,6 +20,7 @@ export const fetchEntries = (access_token) => async (dispatch) => {
         Authorization: `bearer ${access_token}`,
       },
     });
+
     dispatch(updateEntries(result.data));
   } catch (error) {
     console.log(error);

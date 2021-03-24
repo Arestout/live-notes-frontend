@@ -9,6 +9,11 @@ import {
   Grid,
   FormControlLabel,
   Checkbox,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
+  CardMedia,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,6 +29,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  formControl: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    minWidth: 120,
+  },
+  form: {
+    marginBottom: theme.spacing(4),
+  },
 }));
 
 const initialState = {
@@ -32,6 +45,7 @@ const initialState = {
   public: 0,
   blog_img: null,
   imagePreview: '',
+  category_id: 1,
   isEdit: false,
 };
 
@@ -86,22 +100,34 @@ export default function DiaryForm({ initialValues }) {
     formData.append('text', state.text);
     formData.append('public', state.public);
     formData.append('blog_img', state.blog_img);
+    formData.append('category_id', state.category_id);
 
-    const method = state.isEdit ? 'PUT' : 'POST';
     const url = state.isEdit ? `/blog/${state.id}` : '/blog';
+
     setIsLoading(true);
     try {
       const result = await Api({
         url,
-        method,
+        method: 'POST',
         data: formData,
         headers: {
           Authorization: 'bearer' + auth.access_token,
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      if (state.isEdit) {
+        const newEntries = entries.entriesList.map((entry) => {
+          if (entry.id === result.data.id) {
+            entry = result.data;
+            return entry;
+          }
+        });
+        return dispatchUpdateEntries(newEntries);
+      }
+
       dispatchUpdateEntries([
-        { ...result.data, blog_img: state.imagePreview },
+        { ...result.data, blog_img: state.blog_img },
         ...entries.entriesList,
       ]);
     } catch (error) {
@@ -128,7 +154,7 @@ export default function DiaryForm({ initialValues }) {
 
   return (
     <Container maxWidth="md" className="DiaryForm">
-      <form>
+      <form className={classes.form}>
         <TextField
           fullWidth
           margin="dense"
@@ -149,6 +175,31 @@ export default function DiaryForm({ initialValues }) {
           value={state.text}
           onChange={onChangeHandler}
         />
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="category-label">Категория</InputLabel>
+          <Select
+            labelId="category-label"
+            id="category_id"
+            label="Категория"
+            value={state.category_id}
+          >
+            <MenuItem value={1}>Политика</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5</MenuItem>
+          </Select>
+        </FormControl>
+        {state.isEdit && (
+          <CardMedia
+            style={{
+              height: '150px',
+              width: '200px',
+              backgroundSize: 'contain',
+            }}
+            image={state.blog_img}
+          />
+        )}
         <Grid
           container
           direction="row"
@@ -170,6 +221,7 @@ export default function DiaryForm({ initialValues }) {
           </Tooltip>
           <UploadPhotoButton handleChange={handleFileChange} />
           <FormControlLabel
+            className={classes.formControl}
             control={
               <Checkbox
                 name="public"

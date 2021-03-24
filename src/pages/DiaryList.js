@@ -33,7 +33,8 @@ export default function MyDiaryList() {
     }
 
     dispatchFetchEntries(auth.access_token);
-  }, [dispatchFetchEntries, auth.access_token, entries.entriesList]);
+    // eslint-disable-next-line
+  }, [dispatchFetchEntries, auth.access_token]);
 
   return (
     <div style={{ padding: 12 }}>
