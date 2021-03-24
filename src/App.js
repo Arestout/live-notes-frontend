@@ -43,6 +43,16 @@ function App(props) {
     }
   }, [auth.access_token, dispatchFetchAuth, dispatchFetchEntries]);
 
+  try {
+    fetch('https://waxom.ru/api/categories')
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+
   if (auth.error === 'Request failed with status code 401') {
     window.localStorage.removeItem('access_token');
   }

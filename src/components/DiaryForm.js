@@ -9,6 +9,10 @@ import {
   Grid,
   FormControlLabel,
   Checkbox,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  formControl: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    minWidth: 120,
+  },
 }));
 
 const initialState = {
@@ -32,6 +41,7 @@ const initialState = {
   public: 0,
   blog_img: null,
   imagePreview: '',
+  category_id: 1,
   isEdit: false,
 };
 
@@ -87,13 +97,13 @@ export default function DiaryForm({ initialValues }) {
     formData.append('public', state.public);
     formData.append('blog_img', state.blog_img);
 
-    const method = state.isEdit ? 'PUT' : 'POST';
     const url = state.isEdit ? `/blog/${state.id}` : '/blog';
+
     setIsLoading(true);
     try {
       const result = await Api({
         url,
-        method,
+        method: 'POST',
         data: formData,
         headers: {
           Authorization: 'bearer' + auth.access_token,
@@ -149,6 +159,21 @@ export default function DiaryForm({ initialValues }) {
           value={state.text}
           onChange={onChangeHandler}
         />
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="category-label">Категория</InputLabel>
+          <Select
+            labelId="category-label"
+            id="category_id"
+            label="Категория"
+            value={state.category_id}
+          >
+            <MenuItem value={1}>Политика</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5</MenuItem>
+          </Select>
+        </FormControl>
         <Grid
           container
           direction="row"

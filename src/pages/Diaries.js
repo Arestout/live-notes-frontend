@@ -1,6 +1,13 @@
 import React from 'react';
 import '../App.css';
+import DiariesCards from '../components/DiariesCards/DiariesCards';
+import Footer from '../components/Footer';
 
 export default function Diaries() {
-  return <h1 className="diaries">Diaries</h1>;
+  return (
+    <>
+      <DiariesCards />
+      <Footer />
+    </>
+  );
 }
