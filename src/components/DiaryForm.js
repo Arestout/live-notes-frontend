@@ -183,11 +183,11 @@ export default function DiaryForm({ initialValues }) {
             label="Категория"
             value={state.category_id}
           >
-            <MenuItem value={1}>Политика</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={1}>Животные</MenuItem>
+            <MenuItem value={2}>Красота</MenuItem>
+            <MenuItem value={3}>Политика</MenuItem>
+            <MenuItem value={4}>Путешествия</MenuItem>
+            <MenuItem value={5}>Семья</MenuItem>
           </Select>
         </FormControl>
         {state.isEdit && (
