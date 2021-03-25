@@ -115,21 +115,22 @@ export default function DiaryForm({ initialValues }) {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+      console.log('RESULT', result.data);
       if (state.isEdit) {
         const newEntries = entries.entriesList.map((entry) => {
           if (entry.id === result.data.id) {
             entry = result.data;
             return entry;
           }
+          return entry;
         });
         return dispatchUpdateEntries(newEntries);
+      } else {
+        dispatchUpdateEntries([
+          { ...result.data, blog_img: state.blog_img },
+          ...entries.entriesList,
+        ]);
       }
-
-      dispatchUpdateEntries([
-        { ...result.data, blog_img: state.blog_img },
-        ...entries.entriesList,
-      ]);
     } catch (error) {
       console.log(error);
     } finally {
@@ -182,6 +183,8 @@ export default function DiaryForm({ initialValues }) {
             id="category_id"
             label="Категория"
             value={state.category_id}
+            onChange={onChangeHandler}
+            name="category_id"
           >
             <MenuItem value={1}>Животные</MenuItem>
             <MenuItem value={2}>Красота</MenuItem>
@@ -206,7 +209,11 @@ export default function DiaryForm({ initialValues }) {
           justify="flex-start"
           alignItems="center"
         >
-          <Tooltip title="Добавить новую запись в дневник">
+          <Tooltip
+            title={
+              state.isEdit ? 'Редактировать' : 'Добавить новую запись в дневник'
+            }
+          >
             <span>
               <IconButton
                 color="primary"
