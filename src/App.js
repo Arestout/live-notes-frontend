@@ -18,6 +18,7 @@ import { useEntries } from './hooks/useEntries';
 import Contacts from './pages/Contacts';
 import TermsOfUse from './components/TermsOfUse/TermsOfUse';
 import TermsOfUser from './pages/TermsOfUser';
+import AboutUs from './pages/AboutUs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,7 @@ function App(props) {
                 <Route path="/diary-list" exact component={DiaryList} />
                 <Route path="/contacts" exact component={Contacts} />
                 <Route path="/terms-of-use" exact component={TermsOfUser} />
+                <Route path="/about-us" exact component={AboutUs} />
               </Switch>
             </div>
           </div>

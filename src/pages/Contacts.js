@@ -1,9 +1,9 @@
-import { Box, Grid, Link, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import '../App.css';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import Footer from '../components/Footer';
+import { Box, Grid, Link, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Copyright from '../components/Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +21,7 @@ export default function Contacts() {
     <>
       <Box mt={5}>
         <Typography variant="h5" className={classes.root}>
-          LifeNote Inc
+          LiveNote Inc
           <LibraryBooksIcon />
         </Typography>
       </Box>
@@ -47,18 +47,18 @@ export default function Contacts() {
           <Typography>Телефон: +020 618 3858</Typography>
           <Box mt={5}></Box>
           <Typography>Размещение рекламы:</Typography>
-          <Link>sales@lifenote.com</Link>
+          <Link>sales@livenote.com</Link>
           <Box mt={5}></Box>
           <Typography>Тех. поддержка:</Typography>
-          <Link>support@lifenote.com</Link>
+          <Link>support@livenote.com</Link>
           <Box mt={5}></Box>
           <Typography> Сотрудничество :</Typography>
-          <Link>pr@lifenote.com</Link>
+          <Link>pr@livenote.com</Link>
           <Box mt={5}></Box>
         </Box>
       </Grid>
       <Box mt={5}></Box>
-      <Footer />
+      <Copyright />
     </>
   );
 }

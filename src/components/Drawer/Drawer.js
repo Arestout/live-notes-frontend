@@ -5,11 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import PersonIcon from '@material-ui/icons/Person';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import SettingsIcon from '@material-ui/icons/Settings';
 import ImageAvatar from '../Avatar/Avatar';
+import { ListItemIcon } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -55,17 +57,31 @@ export default function ClippedDrawer({ user }) {
             <p>{user.login}</p>
           </div>
 
-          <List>
-            {['Мой профиль', 'Меню 2', 'Меню 3', 'Меню 4'].map(
-              (text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              )
-            )}
+          <List component="nav" aria-label="main mailbox folders">
+            <ListItem button>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="Мой профиль" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <StarBorderIcon />
+              </ListItemIcon>
+              <ListItemText primary="Мои достижения" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <BookmarkBorderIcon />
+              </ListItemIcon>
+              <ListItemText primary="Избранное" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Настройки" />
+            </ListItem>
           </List>
           <Divider />
         </div>

@@ -26,7 +26,13 @@ export default function LabelBottomNavigation() {
       showLabels
       className={classes.root}
     >
-      <BottomNavigationAction label="O нас" value="about" icon={<InfoIcon />} />
+      <BottomNavigationAction
+        label="O нас"
+        value="about"
+        icon={<InfoIcon />}
+        component={Link}
+        to="/about-us"
+      />
       <BottomNavigationAction
         value="terms of use"
         icon={'Пользовательское соглашение'}
