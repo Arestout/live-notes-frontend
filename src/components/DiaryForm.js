@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     marginBottom: theme.spacing(4),
   },
+  errorMessage: { color: 'red' },
 }));
 
 const initialState = {
@@ -159,7 +160,7 @@ export default function DiaryForm({ initialValues }) {
         <TextField
           fullWidth
           margin="dense"
-          label="Название"
+          label="Тема записи"
           variant="outlined"
           name="title"
           value={state.title}
@@ -170,7 +171,7 @@ export default function DiaryForm({ initialValues }) {
           rows="10"
           fullWidth
           margin="dense"
-          label="Описание"
+          label="Текст"
           variant="outlined"
           name="text"
           value={state.text}

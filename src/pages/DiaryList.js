@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Cards from '../components/Cards';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Button, Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useAuth } from '../hooks/useAuth';
@@ -43,8 +44,27 @@ export default function MyDiaryList() {
           <Loader />
         </div>
       )}
+      {!entries.noRecords && (
+        <Box mt={20}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Typography variant="inherit" component="p">
+              У вас пока нет записей
+            </Typography>
+
+            <Button color="inherit" component={Link} to="/create">
+              Создать запись
+            </Button>
+            <Box mt={44}></Box>
+          </Grid>
+        </Box>
+      )}
       <Grid container spacing={3}>
-        {!entries.isLoading && entries.entriesList
+        {!entries.isLoading && !entries.noRecords && entries.entriesList
           ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>

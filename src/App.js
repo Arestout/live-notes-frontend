@@ -15,6 +15,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from './hooks/useAuth';
 import Loader from './components/Loader/Loader';
 import { useEntries } from './hooks/useEntries';
+import Contacts from './pages/Contacts';
+import TermsOfUse from './components/TermsOfUse/TermsOfUse';
+import TermsOfUser from './pages/TermsOfUser';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +67,8 @@ function App(props) {
                 <Route path="/create" exact component={CreateDiary} />
                 <Route path="/edit/:id" exact component={EditDiary} />
                 <Route path="/diary-list" exact component={DiaryList} />
+                <Route path="/contacts" exact component={Contacts} />
+                <Route path="/terms-of-use" exact component={TermsOfUser} />
               </Switch>
             </div>
           </div>
