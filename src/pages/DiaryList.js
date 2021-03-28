@@ -75,9 +75,11 @@ export default function MyDiaryList() {
                     date={new Date(item.updated_at).toLocaleString('ru')}
                     description={item.text}
                     image={item.blog_img}
+                    public={item.public}
                     avatarUrl="/images/image-8.jpg"
                     likeHidden
                     commentHidden
+                    viewsHidden
                   />
                 </Grid>
               );

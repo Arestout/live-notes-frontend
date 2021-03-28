@@ -21,6 +21,7 @@ import { useEntries } from '../hooks/useEntries';
 import EditPostButton from './Buttons/EditPostButton';
 import styles from './Cards.module.css';
 import classNames from 'classnames';
+import ViewsButton from './Buttons/ViewsButton';
 
 const Cards = (props) => {
   const {
@@ -34,6 +35,7 @@ const Cards = (props) => {
     commentHidden = false,
     deleteHidden = false,
     editHidden = false,
+    viewsHidden = false,
     titleClassName,
   } = props;
   const {
@@ -72,6 +74,7 @@ const Cards = (props) => {
       </CardContent>
       <CardActions>
         {!likeHidden && <LikeButton />}
+        {!viewsHidden && <ViewsButton />}
         {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
         {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
