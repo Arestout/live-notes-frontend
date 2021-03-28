@@ -44,7 +44,7 @@ export default function MyDiaryList() {
           <Loader />
         </div>
       )}
-      {/* {!entries.noRecords && (
+      {!entries.entriesList.length && (
         <Box mt={20}>
           <Grid
             container
@@ -62,9 +62,9 @@ export default function MyDiaryList() {
             <Box mt={44}></Box>
           </Grid>
         </Box>
-      )} */}
+      )}
       <Grid container spacing={3}>
-        {!entries.isLoading && !entries.noRecords && entries.entriesList
+        {!entries.isLoading && entries.entriesList && entries.entriesList.length
           ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>
