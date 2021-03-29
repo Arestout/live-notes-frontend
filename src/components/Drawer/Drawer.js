@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import PersonIcon from '@material-ui/icons/Person';
 import ListItemText from '@material-ui/core/ListItemText';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ImageAvatar from '../Avatar/Avatar';
 import { ListItemIcon } from '@material-ui/core';
@@ -66,9 +66,9 @@ export default function ClippedDrawer({ user }) {
             </ListItem>
             <ListItem button>
               <ListItemIcon>
-                <StarBorderIcon />
+                <NotificationsIcon />
               </ListItemIcon>
-              <ListItemText primary="Мои достижения" />
+              <ListItemText primary="Уведомления" />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
