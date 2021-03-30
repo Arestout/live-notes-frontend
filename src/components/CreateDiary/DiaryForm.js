@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UploadPhotoButton from './Buttons/UploadPhotoButton';
+import UploadPhotoButton from '../Buttons/UploadPhotoButton';
 import DiaryEntries from './DiaryEntries';
 import {
   Container,
@@ -17,11 +17,11 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Api from '../api/api';
-import { useAuth } from '../hooks/useAuth';
+import Api from '../../api/api';
+import { useAuth } from '../../hooks/useAuth';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { useEntries } from '../hooks/useEntries';
-import Loader from './Loader/Loader';
+import { useEntries } from '../../hooks/useEntries';
+import Loader from '../Loader/Loader';
 
 const useStyles = makeStyles((theme) => ({
   loader: {

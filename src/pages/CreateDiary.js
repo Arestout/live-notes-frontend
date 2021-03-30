@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ImageAvatar from '../components/Avatar/Avatar';
-import DiaryForm from '../components/DiaryForm';
+import DiaryForm from '../components/CreateDiary/DiaryForm';
 
 const useStyles = makeStyles((theme) => ({
   avatarContainer: {

@@ -62,6 +62,7 @@ export default function DiariesCards() {
                   avatarUrl="/images/image-8.jpg"
                   deleteHidden
                   editHidden
+                  views={diary.views}
                 />
               </Grid>
             );
