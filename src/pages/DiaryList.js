@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cards from '../components/Cards';
-import { Box, Button, Container, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
 import Loader from '../components/Loader/Loader';
-import Copyright from '../components/Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -44,7 +43,7 @@ export default function MyDiaryList() {
           <Loader />
         </div>
       )}
-      {/* {!entries.noRecords && (
+      {!entries.entriesList.length && (
         <Box mt={20}>
           <Grid
             container
@@ -62,9 +61,9 @@ export default function MyDiaryList() {
             <Box mt={44}></Box>
           </Grid>
         </Box>
-      )} */}
+      )}
       <Grid container spacing={3}>
-        {!entries.isLoading && !entries.noRecords && entries.entriesList
+        {!entries.isLoading && entries.entriesList && entries.entriesList.length
           ? entries.entriesList.map((item) => {
               return (
                 <Grid item xs={6} sm={3} key={item.id}>
@@ -86,9 +85,7 @@ export default function MyDiaryList() {
             })
           : null}
       </Grid>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </div>
   );
 }

@@ -71,9 +71,7 @@ export default function AboutUs() {
           auctor a vitae ex. Aenean a commodo lacus, sed tincidunt velit.
         </Typography>
       </Box>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </>
   );
 }

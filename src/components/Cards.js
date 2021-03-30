@@ -21,6 +21,7 @@ import { useEntries } from '../hooks/useEntries';
 import EditPostButton from './Buttons/EditPostButton';
 import styles from './Cards.module.css';
 import classNames from 'classnames';
+import CategoryButton from './Buttons/CategoryButton';
 import ViewsButton from './Buttons/ViewsButton';
 
 const Cards = (props) => {
@@ -35,6 +36,7 @@ const Cards = (props) => {
     commentHidden = false,
     deleteHidden = false,
     editHidden = false,
+    categoryHidden = false,
     viewsHidden = false,
     titleClassName,
   } = props;

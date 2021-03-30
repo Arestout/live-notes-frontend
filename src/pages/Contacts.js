@@ -58,7 +58,6 @@ export default function Contacts() {
         </Box>
       </Grid>
       <Box mt={5}></Box>
-      <Copyright />
     </>
   );
 }

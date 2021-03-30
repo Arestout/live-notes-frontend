@@ -12,6 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../components/Loader/Loader';
 import Copyright from '../components/Copyright/Copyright';
+import CategoryButton from '../components/Buttons/CategoryButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,9 +79,7 @@ export default function FullRecord(props) {
           <Loader />
         </div>
       )}
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </Container>
   );
 }
