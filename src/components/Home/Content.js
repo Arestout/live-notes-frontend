@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Cards';
+import Card from '../Cards';
 import { Grid, Container } from '@material-ui/core';
 import MakerList from './constants';
 

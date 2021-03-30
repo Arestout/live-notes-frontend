@@ -1,7 +1,8 @@
 import React from 'react';
-import EditPostButton from './Buttons/EditPostButton';
-import ReadMoreButton from './Buttons/ReadMoreButton';
-import ImageAvatar from '../components/Avatar/Avatar';
+import EditPostButton from '../Buttons/EditPostButton';
+import ReadMoreButton from '../Buttons/ReadMoreButton';
+import DeletePostButton from '../Buttons/DeletePostButton';
+import ImageAvatar from '../Avatar/Avatar';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -13,7 +14,6 @@ import {
   Card,
   Box,
 } from '@material-ui/core';
-import DeletePostButton from './Buttons/DeletePostButton';
 
 const useStyles = makeStyles((theme) => ({
   card: {

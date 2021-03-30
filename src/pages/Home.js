@@ -1,8 +1,8 @@
 import React from 'react';
 import '../App.css';
-import Welcome from '../components/Welcome';
-import LabelBottomNavigation from '../components/LabelBottomNavigation';
-import Content from '../components/Content';
+import Welcome from '../components/Home/Welcome';
+import LabelBottomNavigation from '../components/Home/LabelBottomNavigation';
+import Content from '../components/Home/Content';
 import { Box } from '@material-ui/core';
 
 function Home() {

@@ -32,6 +32,7 @@ const Cards = (props) => {
     description,
     image,
     id,
+    views,
     likeHidden = false,
     commentHidden = false,
     deleteHidden = false,
@@ -77,6 +78,7 @@ const Cards = (props) => {
       <CardActions>
         {!likeHidden && <LikeButton />}
         {!viewsHidden && <ViewsButton />}
+        <Typography variant="caption">{views}</Typography>
         {!commentHidden && <CommentButton />}
         <ReadMoreButton to={`/diary/${id}`} />
         {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
