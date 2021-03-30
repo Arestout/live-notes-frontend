@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 import { Typography, Container, Box } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Copyright from '../components/Copyright/Copyright';
 import ImageAvatar from '../components/Avatar/Avatar';
 import DiaryForm from '../components/DiaryForm';
 import { useEntries } from '../hooks/useEntries';
@@ -51,7 +50,6 @@ export default function EditDiary({ match }) {
         <Box mt={5}></Box>
       </Container>
       <Box mt={5}></Box>
-      <Copyright />
     </>
   );
 }

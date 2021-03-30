@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { useAuth } from './hooks/useAuth';
+import { useEntries } from './hooks/useEntries';
+
 import Navbar from './components/Navbar';
 import './App.css';
 import Home from './pages/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Diaries from './pages/Diaries';
 import SignIn from './pages/AuthSignIn';
 import SignUp from './pages/AuthSignUp';
@@ -11,14 +15,13 @@ import EditDiary from './pages/EditDiary';
 import DiaryList from './pages/DiaryList';
 import FullRecord from './pages/FullRecord';
 import ClippedDrawer from './components/Drawer/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import { useAuth } from './hooks/useAuth';
 import Loader from './components/Loader/Loader';
-import { useEntries } from './hooks/useEntries';
 import Contacts from './pages/Contacts';
-import TermsOfUse from './components/TermsOfUse/TermsOfUse';
 import TermsOfUser from './pages/TermsOfUser';
 import AboutUs from './pages/AboutUs';
+import Footer from './components/Footer';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
   loader: {
     display: 'flex',
@@ -72,6 +79,7 @@ function App(props) {
                 <Route path="/terms-of-use" exact component={TermsOfUser} />
                 <Route path="/about-us" exact component={AboutUs} />
               </Switch>
+              <Footer />
             </div>
           </div>
         ) : (

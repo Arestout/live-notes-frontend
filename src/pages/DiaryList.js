@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../hooks/useAuth';
 import { useEntries } from '../hooks/useEntries';
 import Loader from '../components/Loader/Loader';
-import Copyright from '../components/Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -84,9 +83,7 @@ export default function MyDiaryList() {
             })
           : null}
       </Grid>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </div>
   );
 }

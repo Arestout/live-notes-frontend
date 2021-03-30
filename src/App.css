@@ -9,14 +9,3 @@ a {
   text-decoration: none;
 }
 
-.home,
-.services,
-.products,
-.sign-up,
-.create {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-}

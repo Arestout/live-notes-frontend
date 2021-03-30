@@ -21,8 +21,13 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   root: {
-    flexGrow: 1,
     margin: '10px 5px',
+  },
+  cardsContainer: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 }));
 
@@ -42,11 +47,11 @@ export default function DiariesCards() {
 
   return (
     <Grid container>
-      <div style={{ padding: 12 }}>
+      <div className={classes.cardsContainer}>
         {response &&
           response.data.map((diary) => {
             return (
-              <Grid className={classes.root} item xs={6} sm={4} key={diary.id}>
+              <Grid className={classes.root} item xs={6} sm={3} key={diary.id}>
                 <Cards
                   titleClassName={classes.title}
                   id={diary.id}

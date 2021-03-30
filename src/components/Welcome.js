@@ -17,6 +17,7 @@ function Welcome() {
   return (
     <>
       <div className="hero-container">
+        <Box mt={10}></Box>
         <video src="/videos/video-1.mp4" autoPlay loop muted />
         <Typography variant="h5" component="h5" className={classes.text}>
           Привет!
