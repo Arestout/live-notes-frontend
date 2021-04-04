@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import UploadPhotoButton from '../Buttons/UploadPhotoButton';
 import DiaryEntries from './DiaryEntries';
 import {
@@ -56,6 +57,7 @@ export default function DiaryForm({ initialValues }) {
   const [isLoading, setIsLoading] = useState(false);
   const { entries, dispatchUpdateEntries, dispatchDeleteEntry } = useEntries();
   const { auth } = useAuth();
+  const history = useHistory();
 
   useEffect(() => {
     if (!initialValues) {
@@ -116,7 +118,7 @@ export default function DiaryForm({ initialValues }) {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('RESULT', result.data);
+
       if (state.isEdit) {
         const newEntries = entries.entriesList.map((entry) => {
           if (entry.id === result.data.id) {
@@ -125,13 +127,14 @@ export default function DiaryForm({ initialValues }) {
           }
           return entry;
         });
-        return dispatchUpdateEntries(newEntries);
+        dispatchUpdateEntries(newEntries);
       } else {
         dispatchUpdateEntries([
           { ...result.data, blog_img: state.blog_img },
           ...entries.entriesList,
         ]);
       }
+      history.push(`/diary/${result.data.id}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -139,11 +142,10 @@ export default function DiaryForm({ initialValues }) {
     }
   };
 
-  const formSubmitHandler = (event) => {
+  const formSubmitHandler = async (event) => {
     event.preventDefault();
 
-    createNewRecord();
-    setState(initialState);
+    await createNewRecord();
   };
 
   const deleteDiaryEntry = async (id) => {
@@ -153,6 +155,14 @@ export default function DiaryForm({ initialValues }) {
     dispatchUpdateEntries(updatedDiaryEntries);
     dispatchDeleteEntry({ id, access_token: auth.access_token });
   };
+
+  if (isLoading || entries.isLoading) {
+    return (
+      <div className={classes.loader}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <Container maxWidth="md" className="DiaryForm">
