@@ -21,11 +21,21 @@ export default function CategoryNav() {
     <>
       <Toolbar classes={{ root: classes.appBarRoot }}>
         <Box className={classes.menuButton}>
-          <Button color="inherit">Животные</Button>
-          <Button color="inherit">Красота</Button>
-          <Button color="inherit">Политика</Button>
-          <Button color="inherit">Путешествия</Button>
-          <Button color="inherit">Семья</Button>
+          <Button color="inherit">
+            <span data-id="1">Животные</span>
+          </Button>
+          <Button color="inherit">
+            <span data-id="2">Красота</span>
+          </Button>
+          <Button color="inherit">
+            <span data-id="3">Политика</span>
+          </Button>
+          <Button color="inherit">
+            <span data-id="4">Путешествия</span>
+          </Button>
+          <Button color="inherit">
+            <span data-id="5">Семья</span>
+          </Button>
         </Box>
       </Toolbar>
     </>

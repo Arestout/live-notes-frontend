@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import { useAuth } from '../../hooks/useAuth';
-import { useFetch } from '../../hooks/useFetch';
 import Cards from '../Cards';
-import styles from '../Cards.module.css';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -31,30 +28,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DiariesCards() {
-  const { auth } = useAuth();
-  const [diaries, setDiaries] = useState([]);
-  const { isLoading, response, error, doFetch } = useFetch('/blogs');
+export default function DiariesCards(props) {
+  const { diaries } = props;
   const classes = useStyles();
-
-  useEffect(() => {
-    doFetch({
-      headers: {
-        Authorization: 'bearer' + auth.access_token,
-      },
-    });
-  }, [doFetch, auth.access_token]);
 
   return (
     <Grid container>
       <div className={classes.cardsContainer}>
-        {response &&
-          response.data.map((diary) => {
+        {diaries &&
+          diaries.map((diary) => {
             return (
               <Grid className={classes.root} item xs={6} sm={3} key={diary.id}>
                 <Cards
                   titleClassName={classes.title}
                   id={diary.id}
+                  categoryId={diary.category_id}
                   title={diary.title}
                   date={new Date(diary.updated_at).toLocaleString('ru')}
                   description={diary.text}
@@ -63,6 +51,7 @@ export default function DiariesCards() {
                   deleteHidden
                   editHidden
                   views={diary.views}
+                  isPublic
                 />
               </Grid>
             );
