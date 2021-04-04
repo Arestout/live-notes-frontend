@@ -69,6 +69,7 @@ function App(props) {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/diary/:id" exact component={FullRecord} />
+                <Route path="/diaries/:categoryId" component={Diaries} />
                 <Route path="/diaries" component={Diaries} />
                 <Route path="/sign-in" component={SignIn} />
                 <Route path="/sign-up" component={SignUp} />

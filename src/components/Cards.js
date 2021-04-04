@@ -32,6 +32,7 @@ const Cards = (props) => {
     description,
     image,
     id,
+    categoryId,
     views,
     likeHidden = false,
     commentHidden = false,
@@ -83,6 +84,7 @@ const Cards = (props) => {
         <ReadMoreButton to={`/diary/${id}`} />
         {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
         {!editHidden && <EditPostButton to={`/edit/${id}`} />}
+        {!categoryHidden && <CategoryButton categoryId={categoryId} />}
       </CardActions>
     </Card>
   );

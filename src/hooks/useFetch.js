@@ -28,7 +28,7 @@ export const useFetch = (url) => {
       .catch((error) => {
         setError(error);
       })
-      .finally(setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }, [isLoading, options, url]);
 
   return { isLoading, response, error, doFetch };
