@@ -70,6 +70,7 @@ export default function MyDiaryList() {
                   <Cards
                     className={classes.title}
                     id={item.id}
+                    categoryId={item.category_id}
                     title={item.title}
                     date={new Date(item.updated_at).toLocaleString('ru')}
                     description={item.text}

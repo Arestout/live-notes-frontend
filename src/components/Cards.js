@@ -41,6 +41,7 @@ const Cards = (props) => {
     categoryHidden = false,
     viewsHidden = false,
     titleClassName,
+    isPublic,
   } = props;
   const {
     auth: { access_token },
@@ -54,6 +55,8 @@ const Cards = (props) => {
     dispatchUpdateEntries(filteredEntries);
     dispatchDeleteEntry({ id, access_token });
   };
+
+  const readeMoreLink = isPublic ? `/diary/${id}?type=public` : `/diary/${id}`;
 
   return (
     <Card>
@@ -81,7 +84,7 @@ const Cards = (props) => {
         {!viewsHidden && <ViewsButton />}
         <Typography variant="caption">{views}</Typography>
         {!commentHidden && <CommentButton />}
-        <ReadMoreButton to={`/diary/${id}`} />
+        <ReadMoreButton to={readeMoreLink} />
         {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
         {!editHidden && <EditPostButton to={`/edit/${id}`} />}
         {!categoryHidden && <CategoryButton categoryId={categoryId} />}

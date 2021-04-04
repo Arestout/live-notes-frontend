@@ -13,6 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../components/Loader/Loader';
 import Copyright from '../components/Copyright/Copyright';
 import CategoryButton from '../components/Buttons/CategoryButton';
+import { useLocation } from 'react-router';
+import Api from '../api/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,28 +34,29 @@ const useStyles = makeStyles((theme) => ({
 export default function FullRecord(props) {
   const { auth } = useAuth();
   const { id } = props.match.params;
+  const location = useLocation();
 
   const [recordData, setRecordData] = useState(null);
 
   const classes = useStyles();
 
+  const url =
+    location.search === '?type=public' ? `/blogs/${id}` : `/blog/${id}`;
+
   useEffect(() => {
     const UserRecord = async () => {
-      return await axios.get(
-        `https://limitless-savannah-84914.herokuapp.com/api/blog/${id}`,
-        {
-          headers: {
-            Authorization: 'bearer' + auth.access_token,
-          },
-        }
-      );
+      return await Api.get(url, {
+        headers: {
+          Authorization: 'bearer' + auth.access_token,
+        },
+      });
     };
     UserRecord().then((response) => {
       if (response.status === 200) {
         setRecordData(response.data);
       }
     });
-  }, [auth.access_token, id]);
+  }, [auth.access_token, id, url]);
   return (
     <Container>
       {recordData ? (

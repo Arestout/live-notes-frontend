@@ -51,6 +51,7 @@ export default function DiariesCards(props) {
                   deleteHidden
                   editHidden
                   views={diary.views}
+                  isPublic
                 />
               </Grid>
             );
