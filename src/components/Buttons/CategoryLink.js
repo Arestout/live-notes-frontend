@@ -1,12 +1,7 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import lightBlue from '@material-ui/core/colors/lightBlue';
-import { Button, Tooltip } from '@material-ui/core';
-import {
-  createMuiTheme,
-  makeStyles,
-  ThemeProvider,
-} from '@material-ui/core/styles';
+import { Tooltip } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
