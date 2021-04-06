@@ -42,6 +42,8 @@ const Cards = (props) => {
     viewsHidden = false,
     titleClassName,
     isPublic,
+    likes,
+    userLike,
   } = props;
   const {
     auth: { access_token },
@@ -79,8 +81,9 @@ const Cards = (props) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        {!likeHidden && <LikeButton />}
+      <CardActions style={{ flexWrap: 'wrap' }}>
+        {!likeHidden && <LikeButton userLike={userLike} id={id} />}
+        {!likeHidden && <Typography variant="caption">{likes}</Typography>}
         {!viewsHidden && <ViewsButton />}
         <Typography variant="caption">{views}</Typography>
         {!commentHidden && <CommentButton />}
