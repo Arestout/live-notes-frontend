@@ -64,6 +64,9 @@ export default function Footer() {
               aria-label="facebook"
               color="inherit"
               className={classes.iconButton}
+              onClick={() => {
+                location.href = 'https://www.facebook.com/';
+              }}
             >
               <FacebookIcon fontSize="default" />
             </IconButton>
@@ -71,6 +74,9 @@ export default function Footer() {
               aria-label="twitter"
               color="inherit"
               className={classes.iconButton}
+              onClick={() => {
+                location.href = 'https://twitter.com/?lang=ru';
+              }}
             >
               <TwitterIcon fontSize="default" />
             </IconButton>
@@ -78,13 +84,19 @@ export default function Footer() {
               aria-label="instagram"
               color="inherit"
               className={classes.iconButton}
+              onClick={() => {
+                location.href = 'https://www.instagram.com/?hl=ru';
+              }}
             >
               <InstagramIcon fontSize="default" />
             </IconButton>
             <IconButton
-              aria-label="instagram"
+              aria-label="linked-in"
               color="inherit"
               className={classes.iconButton}
+              onClick={() => {
+                location.href = 'https://ru.linkedin.com/';
+              }}
             >
               <LinkedInIcon fontSize="default" />
             </IconButton>

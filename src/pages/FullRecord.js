@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import ImageAvatar from '../components/Avatar/Avatar';
 import {
@@ -11,10 +10,9 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../components/Loader/Loader';
-import Copyright from '../components/Copyright/Copyright';
-import CategoryButton from '../components/Buttons/CategoryButton';
 import { useLocation } from 'react-router';
 import Api from '../api/api';
+import CommentList from '../components/CommentList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
+    height: '100hv',
   },
 }));
 
@@ -58,31 +56,32 @@ export default function FullRecord(props) {
     });
   }, [auth.access_token, id, url]);
   return (
-    <Container>
-      {recordData ? (
-        <>
-          <CardHeader
-            avatar={<ImageAvatar />}
-            title={recordData.title}
-            subheader={new Date(recordData.updated_at).toLocaleString('ru')}
-          />
-          {recordData.blog_img !== 'null' && (
-            <>
-              <CardMedia
-                style={{ backgroundSize: 'contain', height: '600px' }}
-                image={recordData.blog_img}
-              />
-              <Box mt={5} />
-            </>
-          )}
-          <Typography component="p">{recordData.text}</Typography>
-        </>
-      ) : (
-        <div className={classes.loader}>
-          <Loader />
-        </div>
-      )}
-      <Box mt={5}></Box>
-    </Container>
+    <>
+      <Container>
+        {recordData ? (
+          <>
+            <CardHeader
+              className={classes.root}
+              avatar={<ImageAvatar />}
+              title={recordData.title}
+              subheader={new Date(recordData.updated_at).toLocaleString('ru')}
+            />
+            <Typography component="p">{recordData.text}</Typography>
+
+            <CardMedia
+              style={{ backgroundSize: 'contain', height: '600px' }}
+              image={recordData.blog_img}
+            />
+            <Box mt={5} />
+          </>
+        ) : (
+          <div className={classes.loader}>
+            <Loader />
+          </div>
+        )}
+        <Box mt={5}></Box>
+      </Container>
+      <>{location.search === '?type=public' && <CommentList></CommentList>}</>
+    </>
   );
 }

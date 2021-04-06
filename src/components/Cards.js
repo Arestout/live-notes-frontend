@@ -21,7 +21,7 @@ import { useEntries } from '../hooks/useEntries';
 import EditPostButton from './Buttons/EditPostButton';
 import styles from './Cards.module.css';
 import classNames from 'classnames';
-import CategoryButton from './Buttons/CategoryButton';
+import CategoryLink from './Buttons/CategoryLink';
 import ViewsButton from './Buttons/ViewsButton';
 
 const Cards = (props) => {
@@ -87,7 +87,7 @@ const Cards = (props) => {
         <ReadMoreButton to={readeMoreLink} />
         {!deleteHidden && <DeletePostButton id={id} onDelete={onDelete} />}
         {!editHidden && <EditPostButton to={`/edit/${id}`} />}
-        {!categoryHidden && <CategoryButton categoryId={categoryId} />}
+        {!categoryHidden && <CategoryLink categoryId={categoryId} />}
       </CardActions>
     </Card>
   );

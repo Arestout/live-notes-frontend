@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import Api from '../api/api';
 
 export const useFetch = (url) => {
@@ -30,6 +31,5 @@ export const useFetch = (url) => {
       })
       .finally(() => setIsLoading(false));
   }, [isLoading, options, url]);
-
   return { isLoading, response, error, doFetch };
 };

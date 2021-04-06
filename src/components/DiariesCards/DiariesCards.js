@@ -38,7 +38,7 @@ export default function DiariesCards(props) {
         {diaries &&
           diaries.map((diary) => {
             return (
-              <Grid className={classes.root} item xs={6} sm={3} key={diary.id}>
+              <Grid className={classes.root} item xs={6} sm={4} key={diary.id}>
                 <Cards
                   titleClassName={classes.title}
                   id={diary.id}
