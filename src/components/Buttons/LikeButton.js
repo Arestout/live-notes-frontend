@@ -8,35 +8,35 @@ import Api from '../../api/api';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function LikeButton(props) {
-  const { userLike, id } = props;
-  const { auth } = useAuth();
+  const { isLiked, onLike, id, isLoading } = props;
+  // const { auth } = useAuth();
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setIsLiked(userLike);
-  }, [userLike]);
+  // useEffect(() => {
+  //   setIsLiked(userLike);
+  // }, [userLike]);
 
-  const onClick = async () => {
-    try {
-      setIsLoading(true);
-      setIsLiked((state) => !state);
-      await Api({
-        url: `/like/${id}`,
-        method: 'POST',
-        headers: {
-          Authorization: 'bearer' + auth.access_token,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      setIsLiked((state) => !state);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const onClick = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     setIsLiked((state) => !state);
+  //     await Api({
+  //       url: `/like/${id}`,
+  //       method: 'POST',
+  //       headers: {
+  //         Authorization: 'bearer' + auth.access_token,
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLiked((state) => !state);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <Tooltip title="Нравится">
@@ -44,7 +44,7 @@ export default function LikeButton(props) {
         aria-label="add to favorites"
         color="secondary"
         disabled={isLoading}
-        onClick={onClick}
+        onClick={() => onLike(id)}
       >
         {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
