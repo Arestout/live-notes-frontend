@@ -52,6 +52,8 @@ export default function DiariesCards(props) {
                   editHidden
                   views={diary.views}
                   isPublic
+                  likes={diary.likes}
+                  userLike={diary.userLike}
                 />
               </Grid>
             );

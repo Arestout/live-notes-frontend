@@ -52,9 +52,7 @@ export default function Diaries() {
 
   return (
     <>
-      <div onClick={setCategory}>
-        <CategoryNav />
-      </div>
+      <CategoryNav setCategory={setCategory} />
       <DiariesCards diaries={response?.data} />
     </>
   );

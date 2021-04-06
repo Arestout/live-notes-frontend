@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Typography,
@@ -23,6 +23,7 @@ import styles from './Cards.module.css';
 import classNames from 'classnames';
 import CategoryLink from './Buttons/CategoryLink';
 import ViewsButton from './Buttons/ViewsButton';
+import Api from '../api/api';
 
 const Cards = (props) => {
   const {
@@ -42,11 +43,22 @@ const Cards = (props) => {
     viewsHidden = false,
     titleClassName,
     isPublic,
+    likes,
+    userLike,
   } = props;
   const {
     auth: { access_token },
   } = useAuth();
   const { entries, dispatchDeleteEntry, dispatchUpdateEntries } = useEntries();
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(userLike);
+    setLikesCount(likes);
+  }, [userLike, likes]);
 
   const onDelete = (id) => {
     const filteredEntries = entries.entriesList.filter(
@@ -54,6 +66,32 @@ const Cards = (props) => {
     );
     dispatchUpdateEntries(filteredEntries);
     dispatchDeleteEntry({ id, access_token });
+  };
+
+  const onLike = async (id) => {
+    try {
+      setIsLoading(true);
+      setIsLiked((state) => !state);
+      await Api({
+        url: `/like/${id}`,
+        method: 'POST',
+        headers: {
+          Authorization: 'bearer' + access_token,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (isLiked) {
+        return setLikesCount((state) => state - 1);
+      }
+
+      setLikesCount((state) => state + 1);
+    } catch (error) {
+      console.log(error);
+      setIsLiked((state) => !state);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const readeMoreLink = isPublic ? `/diary/${id}?type=public` : `/diary/${id}`;
@@ -79,8 +117,16 @@ const Cards = (props) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        {!likeHidden && <LikeButton />}
+      <CardActions style={{ flexWrap: 'wrap' }}>
+        {!likeHidden && (
+          <LikeButton
+            isLiked={isLiked}
+            id={id}
+            onLike={onLike}
+            isLoading={isLoading}
+          />
+        )}
+        {!likeHidden && <Typography variant="caption">{likesCount}</Typography>}
         {!viewsHidden && <ViewsButton />}
         <Typography variant="caption">{views}</Typography>
         {!commentHidden && <CommentButton />}

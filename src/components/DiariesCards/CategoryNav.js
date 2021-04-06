@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CategoryNav() {
+export default function CategoryNav(props) {
+  const { setCategory } = props;
   const classes = useStyles();
   return (
     <>
       <Toolbar classes={{ root: classes.appBarRoot }}>
-        <Box className={classes.menuButton}>
+        <Box className={classes.menuButton} onClick={setCategory}>
           <Button color="inherit">
             <span data-id="1">Животные</span>
           </Button>
