@@ -46,7 +46,13 @@ export default function LabelBottomNavigation() {
         component={Link}
         to="/contacts"
       />
-      <BottomNavigationAction label="Помощь" value="help" icon={<HelpIcon />} />
+      <BottomNavigationAction
+        label="Помощь"
+        value="help"
+        icon={<HelpIcon />}
+        component={Link}
+        to="/support"
+      />
     </BottomNavigation>
   );
 }
