@@ -12,7 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../components/Loader/Loader';
 import { useLocation } from 'react-router';
 import Api from '../api/api';
-import CommentList from '../components/CommentList';
+import CommentList from '../components/Comments/CommentList';
+import CommentForm from '../components/Comments/CommentForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ export default function FullRecord(props) {
   const location = useLocation();
 
   const [recordData, setRecordData] = useState(null);
+  const [userComments, setUserComments] = useState([]);
 
   const classes = useStyles();
 
@@ -52,6 +54,7 @@ export default function FullRecord(props) {
     UserRecord().then((response) => {
       if (response.status === 200) {
         setRecordData(response.data);
+        setUserComments(response.data.comments);
       }
     });
   }, [auth.access_token, id, url]);
@@ -73,15 +76,26 @@ export default function FullRecord(props) {
               image={recordData.blog_img}
             />
             <Box mt={5} />
+            {location.search === '?type=public' && (
+              <>
+                <CommentForm
+                  blog_id={recordData.id}
+                  comments={userComments}
+                  setUserComments={setUserComments}
+                />
+                <CommentList
+                  comments={userComments}
+                  setUserComments={setUserComments}
+                />
+              </>
+            )}
           </>
         ) : (
           <div className={classes.loader}>
             <Loader />
           </div>
         )}
-        <Box mt={5}></Box>
       </Container>
-      <>{location.search === '?type=public' && <CommentList></CommentList>}</>
     </>
   );
 }
