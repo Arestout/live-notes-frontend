@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(5),
   },
+  button: {
+    '&.active': {
+      background: 'primary',
+    },
+  },
 }));
 
 export default function CategoryNav(props) {
