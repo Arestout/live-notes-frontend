@@ -29,7 +29,6 @@ export default function EditDiary({ match }) {
   }
 
   const id = match.params.id;
-  console.log(id);
   const entryValues = entries.entriesList.filter((entry) => entry.id == id)[0];
   if (entryValues) {
     entryValues.isEdit = true;

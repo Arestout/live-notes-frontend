@@ -204,14 +204,14 @@ export default function DiaryForm({ initialValues }) {
             <MenuItem value={5}>Семья</MenuItem>
           </Select>
         </FormControl>
-        {state.isEdit && (
+        {(state.isEdit || state.imagePreview) && (
           <CardMedia
             style={{
               height: '150px',
               width: '200px',
               backgroundSize: 'contain',
             }}
-            image={state.blog_img}
+            image={state.isEdit ? state.blog_img : state.imagePreview}
           />
         )}
         <Grid

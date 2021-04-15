@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import { useAuth } from './hooks/useAuth';
 import { useEntries } from './hooks/useEntries';
@@ -62,7 +67,7 @@ function App(props) {
   return (
     <>
       <Router>
-        {auth.isAuth || !auth.access_token ? (
+        {auth.isAuth ? (
           <div className={classes.root}>
             {auth.user && <ClippedDrawer user={auth.user} />}
             <div className={classes.content}>
@@ -71,7 +76,12 @@ function App(props) {
                 <Route path="/" exact component={Home} />
                 <Route path="/diary/:id" exact component={FullRecord} />
                 <Route path="/diaries/:categoryId" component={Diaries} />
-                <Route path="/diaries" component={Diaries} />
+                <Route
+                  path="/diaries"
+                  render={() =>
+                    auth.isAuth ? <Diaries /> : <Redirect to="/sign-in" />
+                  }
+                />
                 <Route path="/sign-in" component={SignIn} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/create" exact component={CreateDiary} />
