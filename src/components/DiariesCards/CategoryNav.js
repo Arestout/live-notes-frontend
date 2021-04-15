@@ -13,30 +13,30 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(5),
   },
-  button: {
-    '&.active': {
-      background: 'primary',
-    },
-  },
 }));
 
 export default function CategoryNav(props) {
+  const [flag, setFlag] = React.useState(true);
   const { setCategory } = props;
   const classes = useStyles();
+
+  const handleClick = () => {
+    setFlag(!flag);
+  };
   return (
     <>
       <Toolbar classes={{ root: classes.appBarRoot }}>
         <Box className={classes.menuButton} onClick={setCategory}>
-          <Button color="inherit">
+          <Button color={flag ? 'inherit' : 'secondary'}>
             <span data-id="1">Животные</span>
           </Button>
-          <Button color="inherit">
+          <Button color={flag ? 'inherit' : 'secondary'}>
             <span data-id="2">Красота</span>
           </Button>
-          <Button color="inherit">
+          <Button color={flag ? 'inherit' : 'secondary'}>
             <span data-id="3">Политика</span>
           </Button>
-          <Button color="inherit">
+          <Button color={flag ? 'inherit' : 'secondary'}>
             <span data-id="4">Путешествия</span>
           </Button>
           <Button color="inherit">
