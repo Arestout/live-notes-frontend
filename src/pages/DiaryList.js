@@ -66,7 +66,7 @@ export default function MyDiaryList() {
         {!entries.isLoading && entries.entriesList && entries.entriesList.length
           ? entries.entriesList.map((item) => {
               return (
-                <Grid item xs={6} sm={3} key={item.id}>
+                <Grid item xs={6} sm={4} key={item.id}>
                   <Cards
                     className={classes.title}
                     id={item.id}
