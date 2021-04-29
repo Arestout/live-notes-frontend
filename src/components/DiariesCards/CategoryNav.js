@@ -16,28 +16,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CategoryNav(props) {
-  const { setCategory, flag } = props;
+  const { setCategory, curCatId } = props;
   const classes = useStyles();
-
+  const categories = [
+    { id: 1, name: 'Животные' },
+    { id: 2, name: 'Красота' },
+    { id: 3, name: 'Политика' },
+    { id: 4, name: 'Путешествия' },
+    { id: 5, name: 'Семья' },
+  ];
   return (
     <>
       <Toolbar classes={{ root: classes.appBarRoot }}>
         <Box className={classes.menuButton} onClick={setCategory}>
-          <Button color={flag ? 'inherit' : 'primary'}>
-            <span data-id="1">Животные</span>
-          </Button>
-          <Button color={flag ? 'inherit' : 'primary'}>
-            <span data-id="2">Красота</span>
-          </Button>
-          <Button color={flag ? 'inherit' : 'primary'}>
-            <span data-id="3">Политика</span>
-          </Button>
-          <Button color={flag ? 'inherit' : 'primary'}>
-            <span data-id="4">Путешествия</span>
-          </Button>
-          <Button color={flag ? 'inherit' : 'primary'}>
-            <span data-id="5">Семья</span>
-          </Button>
+          {categories.map((item) => {
+            return (
+              <Button
+                color={+curCatId === item.id ? 'primary' : 'inherit'}
+                key={item.id}
+              >
+                <span data-id={item.id}>{item.name}</span>
+              </Button>
+            );
+          })}
         </Box>
       </Toolbar>
     </>
