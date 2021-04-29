@@ -52,9 +52,6 @@ export default function Diaries() {
       </div>
     );
   }
-  const handleClick = () => {
-    setFlag(!flag);
-  };
 
   const handlePageChange = (event, number) => {
     history.push(`/diaries/${number}`);
@@ -62,7 +59,7 @@ export default function Diaries() {
 
   return (
     <>
-      <CategoryNav setCategory={setCategory} color={handleClick} />
+      <CategoryNav setCategory={setCategory} curCatId={categoryId} />
       <DiariesCards
         diaries={categoryId ? response?.data : response?.data?.blogs}
       />
