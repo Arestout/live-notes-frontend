@@ -25,7 +25,7 @@ export default function CategoryLink(props) {
   return (
     <ThemeProvider theme={theme}>
       <Tooltip title="Категория записи">
-        <Link href={`/diaries/${categoryId}`} underline="hover">
+        <Link href={`/diaries/cat/${categoryId}`} underline="hover">
           {categories[categoryId]}
         </Link>
       </Tooltip>

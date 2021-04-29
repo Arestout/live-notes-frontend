@@ -12,12 +12,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DiaresPagination() {
+export default function DiaresPagination(props) {
+  const { count, page, onChange } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Pagination count={10} variant="outlined" color="primary" />
+      <Pagination
+        count={count}
+        page={+page}
+        variant="outlined"
+        color="primary"
+        onChange={onChange}
+      />
     </div>
   );
 }

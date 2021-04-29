@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryNav from '../components/DiariesCards/CategoryNav';
 import DiariesCards from '../components/DiariesCards/DiariesCards';
@@ -25,10 +24,10 @@ export default function Diaries() {
   const { auth } = useAuth();
 
   const history = useHistory();
-  let { categoryId } = useParams();
-  const url = categoryId ? `/blogs/category/${categoryId}` : '/blogs';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const { categoryId, pageId = 1 } = useParams();
+  const url = categoryId
+    ? `/blogs/category/${categoryId}`
+    : `/blogs_pagination/${pageId}`;
   const { isLoading, response, error, doFetch } = useFetch(url);
 
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function Diaries() {
   const setCategory = (event) => {
     const categoryId = event.target?.dataset?.id;
     if (categoryId) {
-      history.push(`/diaries/${categoryId}`);
+      history.push(`/diaries/cat/${categoryId}`);
     }
   };
 
@@ -57,12 +56,24 @@ export default function Diaries() {
     setFlag(!flag);
   };
 
+  const handlePageChange = (event, number) => {
+    history.push(`/diaries/${number}`);
+  };
+
   return (
     <>
       <CategoryNav setCategory={setCategory} color={handleClick} />
-      <DiariesCards diaries={response?.data} />
+      <DiariesCards
+        diaries={categoryId ? response?.data : response?.data?.blogs}
+      />
       <Box mt={5} />
-      <DiaresPagination />
+      {!categoryId && (
+        <DiaresPagination
+          count={response?.data?.pages}
+          page={pageId}
+          onChange={handlePageChange}
+        />
+      )}
       <Box mt={5} />
     </>
   );

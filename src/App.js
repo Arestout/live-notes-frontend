@@ -77,9 +77,9 @@ function App(props) {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/diary/:id" exact component={FullRecord} />
-                <Route path="/diaries/:categoryId" component={Diaries} />
+                <Route path="/diaries/cat/:categoryId" component={Diaries} />
                 <Route
-                  path="/diaries"
+                  path="/diaries/:pageId?"
                   render={() =>
                     auth.isAuth ? <Diaries /> : <Redirect to="/sign-in" />
                   }
