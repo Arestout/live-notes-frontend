@@ -26,6 +26,8 @@ import TermsOfUser from './pages/TermsOfUser';
 import AboutUs from './pages/AboutUs';
 import Faq from './pages/Faq';
 import Footer from './components/Footer';
+import UserProfile from './pages/UserProfile';
+import UserSettings from './pages/UserSettings';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -75,9 +77,9 @@ function App(props) {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/diary/:id" exact component={FullRecord} />
-                <Route path="/diaries/:categoryId" component={Diaries} />
+                <Route path="/diaries/cat/:categoryId" component={Diaries} />
                 <Route
-                  path="/diaries"
+                  path="/diaries/:pageId?"
                   render={() =>
                     auth.isAuth ? <Diaries /> : <Redirect to="/sign-in" />
                   }
@@ -91,6 +93,8 @@ function App(props) {
                 <Route path="/terms-of-use" exact component={TermsOfUser} />
                 <Route path="/about-us" exact component={AboutUs} />
                 <Route path="/support" exact component={Faq} />
+                <Route path="/user-profile" exact component={UserProfile} />
+                <Route path="/setting" exact component={UserSettings} />
               </Switch>
               <Footer />
             </div>

@@ -36,6 +36,7 @@ export default function DiariesCards(props) {
     <Grid container>
       <div className={classes.cardsContainer}>
         {diaries &&
+          diaries.length &&
           diaries.map((diary) => {
             return (
               <Grid className={classes.root} item xs={6} sm={4} key={diary.id}>

@@ -7,6 +7,8 @@ import { useAuth } from '../hooks/useAuth';
 import { useFetch } from '../hooks/useFetch';
 import Loader from '../components/Loader/Loader';
 import { useParams, useHistory } from 'react-router-dom';
+import DiaresPagination from '../components/DiariesCards/DiaresPagination';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   loader: {
@@ -22,9 +24,10 @@ export default function Diaries() {
   const { auth } = useAuth();
 
   const history = useHistory();
-  let { categoryId } = useParams();
-  const url = categoryId ? `/blogs/category/${categoryId}` : '/blogs';
-
+  const { categoryId, pageId = 1 } = useParams();
+  const url = categoryId
+    ? `/blogs/category/${categoryId}`
+    : `/blogs_pagination/${pageId}`;
   const { isLoading, response, error, doFetch } = useFetch(url);
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function Diaries() {
   const setCategory = (event) => {
     const categoryId = event.target?.dataset?.id;
     if (categoryId) {
-      history.push(`/diaries/${categoryId}`);
+      history.push(`/diaries/cat/${categoryId}`);
     }
   };
 
@@ -49,11 +52,29 @@ export default function Diaries() {
       </div>
     );
   }
+  const handleClick = () => {
+    setFlag(!flag);
+  };
+
+  const handlePageChange = (event, number) => {
+    history.push(`/diaries/${number}`);
+  };
 
   return (
     <>
-      <CategoryNav setCategory={setCategory} />
-      <DiariesCards diaries={response?.data} />
+      <CategoryNav setCategory={setCategory} color={handleClick} />
+      <DiariesCards
+        diaries={categoryId ? response?.data : response?.data?.blogs}
+      />
+      <Box mt={5} />
+      {!categoryId && (
+        <DiaresPagination
+          count={response?.data?.pages}
+          page={pageId}
+          onChange={handlePageChange}
+        />
+      )}
+      <Box mt={5} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClippedDrawer({ user }) {
   const classes = useStyles();
-  console.log(user);
   return (
     <div className={classes.root}>
       <Drawer
@@ -58,7 +58,7 @@ export default function ClippedDrawer({ user }) {
           </div>
 
           <List component="nav" aria-label="main mailbox folders">
-            <ListItem button>
+            <ListItem button component={Link} to="/user-profile">
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
@@ -76,7 +76,7 @@ export default function ClippedDrawer({ user }) {
               </ListItemIcon>
               <ListItemText primary="Избранное" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/setting">
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
