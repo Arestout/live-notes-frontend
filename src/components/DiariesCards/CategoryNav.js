@@ -3,7 +3,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import { Box } from '@material-ui/core';
+import { Box, IconButton, InputBase, Divider, Paper } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
   appBarRoot: {
@@ -12,6 +13,13 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(5),
+  },
+  iconButton: {
+    padding: 10,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
   },
 }));
 
@@ -40,6 +48,20 @@ export default function CategoryNav(props) {
             );
           })}
         </Box>
+        <Paper component="form" className={classes.appBarRoot}>
+          <InputBase
+            className={classes.input}
+            placeholder="Поиск"
+            inputProps={{ 'aria-label': 'search ' }}
+          />
+          <IconButton
+            type="submit"
+            className={classes.iconButton}
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
+        </Paper>
       </Toolbar>
     </>
   );
